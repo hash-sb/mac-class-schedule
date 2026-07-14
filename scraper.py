@@ -51,6 +51,7 @@ accordingly.
 import argparse
 import json
 import os
+import re
 import sys
 import time
 
@@ -78,6 +79,13 @@ def new_session():
     return s
 
 
+def clean_term_description(description):
+    """Banner appends things like '(View Only)' to some term descriptions -- strip that for display."""
+    if not description:
+        return description
+    return re.sub(r"\s*\(view only\)\s*$", "", description, flags=re.IGNORECASE).strip()
+
+
 def list_terms(session, search_term="", offset=1, max_results=100):
     """GET the list of terms Banner knows about: [{code, description}, ...]"""
     r = session.get(
@@ -92,7 +100,7 @@ def list_terms(session, search_term="", offset=1, max_results=100):
         code = item.get("code")
         desc = item.get("description")
         if code and desc:
-            terms.append({"code": code, "description": desc})
+            terms.append({"code": code, "description": clean_term_description(desc)})
     return terms
 
 
@@ -248,7 +256,15 @@ def save_term(term_code, description, sections):
     print(f"  saved {len(sections)} sections -> {path}")
 
 
-def update_terms_index(all_known_terms, scraped_codes):
+def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
+    """
+    scraped_codes: term codes we attempted to scrape this run.
+    section_counts: {term_code: number_of_sections_found}, used to tell
+        "actually has course data" apart from "Banner lists this term but
+        it's an empty/not-yet-published shell" (common for placeholder
+        Summer/January terms tagged "(View Only)").
+    """
+    section_counts = section_counts or {}
     path = os.path.join(DATA_DIR, "terms.json")
     existing = {}
     if os.path.exists(path):
@@ -256,14 +272,25 @@ def update_terms_index(all_known_terms, scraped_codes):
             existing = {t["code"]: t for t in json.load(f).get("terms", [])}
 
     for t in all_known_terms:
-        existing[t["code"]] = {
-            "code": t["code"],
+        code = t["code"]
+        if code in section_counts:
+            has_data = section_counts[code] > 0
+        elif code in scraped_codes:
+            has_data = existing.get(code, {}).get("scraped", False)
+        else:
+            has_data = existing.get(code, {}).get("scraped", False)
+        existing[code] = {
+            "code": code,
             "description": t["description"],
-            "scraped": t["code"] in scraped_codes or existing.get(t["code"], {}).get("scraped", False),
+            "scraped": has_data,
         }
 
     merged = sort_terms_chronologically(list(existing.values()))
-    current = guess_current_term(merged)
+    # Only guess "current" among terms that actually have course data --
+    # otherwise an empty placeholder term (0 sections) can "win" just
+    # because its description parses as the nearest season/year.
+    candidates = [t for t in merged if t.get("scraped")]
+    current = guess_current_term(candidates) or guess_current_term(merged)
 
     with open(path, "w") as f:
         json.dump(
@@ -336,13 +363,15 @@ def main():
         return
 
     scraped_codes = []
+    section_counts = {}
     for t in targets:
         print(f"Scraping {t['description']} ({t['code']})...")
         sections = fetch_courses_for_term(session, t["code"])
         save_term(t["code"], t["description"], sections)
         scraped_codes.append(t["code"])
+        section_counts[t["code"]] = len(sections)
 
-    update_terms_index(known_terms, scraped_codes)
+    update_terms_index(known_terms, scraped_codes, section_counts)
     print("Done.")
 
 

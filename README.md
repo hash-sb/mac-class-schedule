@@ -36,20 +36,28 @@ Nothing in `web/` ever talks to Macalester's servers directly -- only
    "Build and deployment", set **Source** to **GitHub Actions**. (Don't
    point it at a branch -- the workflow deploys directly.)
 
-3. **Allow the workflow to commit.** In the repo: Settings -> Actions ->
-   General -> "Workflow permissions" -> select **"Read and write
-   permissions"**. This lets the scrape job push the refreshed JSON back
-   to `main`.
-
-4. **Run it the first time.** Go to the Actions tab -> "Update schedule
+3. **Run it the first time.** Go to the Actions tab -> "Update schedule
    data & deploy" -> **Run workflow**. This scrapes real data and deploys
    the site. After that it runs automatically on the cron schedule in the
    workflow file (daily by default -- edit the `cron:` line to change it,
    e.g. hourly during registration weeks).
 
-5. **Find your URL.** Once the `deploy` job finishes, the site's live at
+4. **Find your URL.** Once the job finishes, the site's live at
    `https://<your-username>.github.io/<repo-name>/` (also shown in the
    Actions run summary and in Settings -> Pages).
+
+That's it -- no "Workflow permissions" setting to touch. The workflow
+scrapes and deploys in a single job without ever committing back to the
+repo, so it only needs the default read-only `GITHUB_TOKEN` plus Pages
+deploy permissions. (If your repo is under an organization, the "Read and
+write permissions" toggle is often locked by the org owner anyway --
+this design avoids needing it at all.)
+
+If you *do* want the scraped JSON versioned in git history (e.g. to see
+how seat counts changed over time), that's an easy add-on: reintroduce a
+`git add / commit / push` step before the deploy step, using either the
+default token (if your org allows read/write) or a fine-grained Personal
+Access Token stored as a repo secret.
 
 ```bash
 git init

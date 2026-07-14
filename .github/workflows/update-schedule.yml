@@ -12,10 +12,23 @@ permissions:
   contents: read
 
 jobs:
-  scrape:
+  build-and-deploy:
+    # Scrapes fresh data and deploys it in the same job, without ever
+    # committing back to the repo. This means the workflow only needs
+    # read access to the repo plus pages/id-token write -- it works even
+    # when "Read and write permissions" for the default GITHUB_TOKEN is
+    # locked out (common on org-owned repos, where only an org owner can
+    # change that setting). Each run fully regenerates web/data from
+    # Macalester's live site, so there's no state that needs to persist
+    # in git between runs.
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -34,31 +47,6 @@ jobs:
           # so "search all semesters" stays populated without re-scraping
           # the school's entire multi-decade term history every run.
           python scraper.py --all --max-terms 16
-
-      - name: Commit updated data
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add web/data
-          if git diff --cached --quiet; then
-            echo "No data changes."
-          else
-            git commit -m "Update schedule data ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-            git push
-          fi
-
-  deploy:
-    needs: scrape
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Check out repo (post-scrape)
-        uses: actions/checkout@v4
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
