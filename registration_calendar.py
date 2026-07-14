@@ -28,6 +28,11 @@ USAGE
         and prints every window it found, for troubleshooting if Macalester
         changes the page's structure.
 
+    python registration_calendar.py --force
+        Forces run_full=true regardless of window/baseline status --
+        useful for manually testing the rest of the pipeline without
+        waiting for (or faking) an actual registration period.
+
 NOTE ON RELIABILITY
 --------------------
 This depends on the calendar page continuing to use HTML tables with
@@ -172,6 +177,11 @@ def active_reasons(today=None, debug=False):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--debug", action="store_true", help="Save raw HTML + print every parsed window")
+    ap.add_argument(
+        "--force",
+        action="store_true",
+        help="Force run_full=true regardless of window/baseline status (for manual testing)",
+    )
     args = ap.parse_args()
 
     reasons = active_reasons(debug=args.debug)
@@ -180,9 +190,9 @@ def main():
         print(f"active: {r}")
 
     is_baseline = datetime.utcnow().hour == BASELINE_HOUR_UTC
-    run_full = in_window or is_baseline
+    run_full = in_window or is_baseline or args.force
 
-    print(f"in_window={in_window} baseline_hour={is_baseline} -> run_full={run_full}")
+    print(f"in_window={in_window} baseline_hour={is_baseline} forced={args.force} -> run_full={run_full}")
 
     gh_out = os.environ.get("GITHUB_OUTPUT")
     if gh_out:

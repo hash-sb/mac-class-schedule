@@ -8,7 +8,12 @@ on:
     # add/drop window, or it's the once-daily baseline hour. See
     # registration_calendar.py for the full logic.
     - cron: "0 * * * *"
-  workflow_dispatch: {}   # lets you trigger a run manually from the Actions tab
+  workflow_dispatch:      # lets you trigger a run manually from the Actions tab
+    inputs:
+      force:
+        description: "Force a full scrape + deploy, ignoring the registration window check (useful while testing)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -45,7 +50,12 @@ jobs:
 
       - name: Check registration window
         id: window
-        run: python registration_calendar.py
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python registration_calendar.py --force
+          else
+            python registration_calendar.py
+          fi
 
       - name: Install Playwright's Chromium
         if: steps.window.outputs.run_full == 'true'
@@ -69,10 +79,14 @@ jobs:
           # Renders macadmsys.macalester.edu's Class Schedule page (a
           # different Banner host/environment than the search API above)
           # with a real headless browser and patches seats_available/
-          # max_enrollment onto whatever scraper.py already collected, for
-          # every term that isn't finished yet -- this is the numbers
-          # source confirmed to match what you see on the actual site.
-          python scrape_classschedule.py --all-nonfinished
+          # max_enrollment onto whatever scraper.py already collected.
+          # Forced runs refresh every scraped term (useful for testing);
+          # normal runs only touch terms that can still change.
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python scrape_classschedule.py --all
+          else
+            python scrape_classschedule.py --all-nonfinished
+          fi
 
       - name: Configure Pages
         if: steps.window.outputs.run_full == 'true'

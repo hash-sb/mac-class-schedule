@@ -284,6 +284,12 @@ def main():
         action="store_true",
         help="Process every scraped term in web/data/terms.json that isn't finished yet (used by the workflow)",
     )
+    group.add_argument(
+        "--all",
+        dest="all_terms",
+        action="store_true",
+        help="Process every scraped term regardless of finished status (for testing -- slower, hits closed terms too)",
+    )
     ap.add_argument("--debug", action="store_true", help="Save screenshot + HTML + visible text for inspection")
     ap.add_argument("--headed", action="store_true", help="Show the browser window instead of running headless (local debugging only)")
     ap.add_argument(
@@ -293,7 +299,7 @@ def main():
     )
     args = ap.parse_args()
 
-    if args.all_nonfinished:
+    if args.all_nonfinished or args.all_terms:
         from term_utils import is_term_finished
 
         terms_path = os.path.join(DATA_DIR, "terms.json")
@@ -303,15 +309,19 @@ def main():
         with open(terms_path, encoding="utf-8") as f:
             terms_index = json.load(f)
 
-        targets = [
-            t for t in terms_index.get("terms", [])
-            if t.get("scraped") and not is_term_finished(t["description"])
-        ]
+        if args.all_terms:
+            targets = [t for t in terms_index.get("terms", []) if t.get("scraped")]
+        else:
+            targets = [
+                t for t in terms_index.get("terms", [])
+                if t.get("scraped") and not is_term_finished(t["description"])
+            ]
         if not targets:
-            print("No non-finished scraped terms to refresh right now.")
+            print("No matching scraped terms to refresh.")
             return
 
-        print(f"Refreshing live seats for {len(targets)} non-finished term(s): {[t['code'] for t in targets]}")
+        label = "all scraped" if args.all_terms else "non-finished"
+        print(f"Refreshing live seats for {len(targets)} {label} term(s): {[t['code'] for t in targets]}")
         for t in targets:
             process_one_term(t["code"], headless=not args.headed, debug=args.debug, no_merge=args.no_merge)
         return

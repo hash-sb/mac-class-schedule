@@ -40,6 +40,25 @@ Nothing in `web/` ever talks to Macalester's servers directly -- only
 `scraper.py` and `registration_calendar.py` do that, and only when GitHub
 Actions (or you, locally) runs them.
 
+## Forcing a full update while testing
+
+Don't want to wait for (or fake) an actual registration window just to
+test a change? On the Actions tab, "Update schedule data & deploy" ->
+**Run workflow** has a **force** checkbox -- check it and the run skips
+the window check entirely, doing a full scrape + Class Schedule refresh +
+deploy regardless of the date. It also refreshes seats for *every*
+scraped term (not just non-finished ones), so it's a good end-to-end
+smoke test.
+
+Locally, the equivalent is just calling the underlying scripts directly
+without the gating wrapper:
+
+```bash
+python registration_calendar.py --force   # confirms run_full=true, no window needed
+python scraper.py --all --max-terms 16 --no-live-seats
+python scrape_classschedule.py --all      # every scraped term, not just non-finished
+```
+
 ## How the scrape frequency works
 
 The workflow's cron fires every hour, but `registration_calendar.py` runs
