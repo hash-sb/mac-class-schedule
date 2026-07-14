@@ -54,10 +54,12 @@ import os
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 
 import requests
 
-from term_utils import guess_current_term, sort_terms_chronologically
+from term_utils import guess_current_term, is_term_finished, sort_terms_chronologically
 
 BASE = "https://oci-macxe.macalester.edu/StudentRegistrationSsb/ssb"
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "data")
@@ -217,7 +219,96 @@ def parse_section(raw):
     }
 
 
-def fetch_courses_for_term(session, term_code, verbose=True):
+def fetch_live_enrollment(session, term_code, crn):
+    """
+    Best-effort fetch of ONE section's live seat numbers, via the per-CRN
+    endpoint Banner 9's own search UI calls to refresh a row's enrollment
+    info on demand (separate from the bulk searchResults page, which can
+    return a snapshot that lags behind real registration activity for a
+    term under active registration).
+
+    Returns a dict on success, or None if this Banner instance doesn't
+    expose the endpoint to guest sessions, returns something we can't
+    parse, or the request fails -- callers must treat None as "leave the
+    bulk-search value alone," never as zero seats.
+    """
+    try:
+        r = session.get(
+            f"{BASE}/searchResults/getEnrollmentInfo",
+            params={"term": term_code, "courseReferenceNumber": crn},
+            timeout=15,
+        )
+    except requests.RequestException:
+        return None
+    if r.status_code != 200:
+        return None
+    try:
+        data = r.json()
+    except ValueError:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def refresh_live_seats(session, term_code, sections, verbose=True, max_workers=8):
+    """
+    Best-effort: overwrite each section's seat numbers with a fresh per-CRN
+    lookup instead of the bulk-search snapshot. Only called for terms that
+    aren't finished yet (see is_term_finished) -- closed terms can't change
+    anymore, so their bulk-search numbers are already final.
+
+    Probes a handful of sections first; if none of them return anything
+    usable, this Banner instance likely doesn't expose the per-CRN endpoint
+    to guest sessions (or it's named/shaped differently here), so we bail
+    out immediately rather than making hundreds of requests for nothing.
+    """
+    if not sections:
+        return sections
+
+    probe = sections[: min(5, len(sections))]
+    probe_ok = sum(
+        1
+        for s in probe
+        if (info := fetch_live_enrollment(session, term_code, s["crn"]))
+        and ("seatsAvailable" in info or "maximumEnrollment" in info)
+    )
+    if probe_ok == 0:
+        if verbose:
+            print("    live seat refresh not available for this term (endpoint missing/unsupported) -- keeping bulk-search values")
+        return sections
+
+    def _refresh(sec):
+        info = fetch_live_enrollment(session, term_code, sec["crn"])
+        if not info:
+            return False
+        max_e = info.get("maximumEnrollment", sec.get("max_enrollment"))
+        enr = info.get("enrollment", sec.get("enrollment"))
+        seats = info.get("seatsAvailable")
+        if seats is None and max_e is not None and enr is not None:
+            seats = max_e - enr
+        if seats is None:
+            return False
+        sec["max_enrollment"] = max_e
+        sec["enrollment"] = enr
+        sec["seats_available"] = seats
+        sec["seats_estimated"] = False
+        sec["open_section"] = seats > 0
+        return True
+
+    updated = 0
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futures = [ex.submit(_refresh, s) for s in sections]
+        for done, fut in enumerate(as_completed(futures), 1):
+            if fut.result():
+                updated += 1
+            if verbose and done % 100 == 0:
+                print(f"    live seats {done}/{len(sections)}", end="\r")
+
+    if verbose:
+        print(f"\n    live seat refresh: updated {updated}/{len(sections)} sections")
+    return sections
+
+
+def fetch_courses_for_term(session, term_code, description, verbose=True, live_seats=True):
     """Page through searchResults for a term and return a list of parsed sections."""
     select_term(session, term_code)
 
@@ -261,15 +352,20 @@ def fetch_courses_for_term(session, term_code, verbose=True):
 
     if verbose:
         print()
+
+    if live_seats and not is_term_finished(description):
+        all_sections = refresh_live_seats(session, term_code, all_sections, verbose=verbose)
+
     return all_sections
 
 
 def save_term(term_code, description, sections):
     os.makedirs(DATA_DIR, exist_ok=True)
     path = os.path.join(DATA_DIR, f"{term_code}.json")
+    scraped_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     with open(path, "w") as f:
         json.dump(
-            {"code": term_code, "description": description, "courses": sections},
+            {"code": term_code, "description": description, "scraped_at": scraped_at, "courses": sections},
             f,
             indent=1,
         )
@@ -316,6 +412,7 @@ def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
         json.dump(
             {
                 "current_term_code": current["code"] if current else None,
+                "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "terms": merged,
             },
             f,
@@ -332,6 +429,11 @@ def main():
     ap.add_argument("--all", action="store_true", help="Scrape every term Banner returns")
     ap.add_argument("--max-terms", type=int, default=None, help="Cap how many terms --all scrapes (most recent first)")
     ap.add_argument("--debug", action="store_true", help="Dump raw first-page JSON for inspection")
+    ap.add_argument(
+        "--no-live-seats",
+        action="store_true",
+        help="Skip the per-CRN live seat refresh and only use the bulk search snapshot",
+    )
     args = ap.parse_args()
 
     session = new_session()
@@ -360,6 +462,21 @@ def main():
         with open(os.path.join(DATA_DIR, f"_debug_{term_code}.json"), "w") as f:
             f.write(r.text)
         print(f"Wrote raw debug response for term {term_code} to web/data/_debug_{term_code}.json")
+
+        # Also probe the per-CRN live-enrollment endpoint on the first
+        # section in that response, so you can confirm whether it exists
+        # on this Banner instance and what it actually returns.
+        try:
+            first_crn = r.json().get("data", [{}])[0].get("courseReferenceNumber")
+        except (ValueError, IndexError, AttributeError):
+            first_crn = None
+        if first_crn:
+            info = fetch_live_enrollment(session, term_code, first_crn)
+            debug_path = os.path.join(DATA_DIR, f"_debug_enrollment_{term_code}_{first_crn}.json")
+            with open(debug_path, "w") as f:
+                json.dump(info, f, indent=1)
+            print(f"Wrote live-enrollment probe for CRN {first_crn} to web/data/_debug_enrollment_{term_code}_{first_crn}.json"
+                  f" ({'got data' if info else 'endpoint returned nothing usable'})")
         return
 
     targets = []
@@ -386,7 +503,7 @@ def main():
     section_counts = {}
     for t in targets:
         print(f"Scraping {t['description']} ({t['code']})...")
-        sections = fetch_courses_for_term(session, t["code"])
+        sections = fetch_courses_for_term(session, t["code"], t["description"], live_seats=not args.no_live_seats)
         save_term(t["code"], t["description"], sections)
         scraped_codes.append(t["code"])
         section_counts[t["code"]] = len(sections)

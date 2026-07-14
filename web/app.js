@@ -107,13 +107,34 @@ function activeFilterCount(f) {
   return n;
 }
 
+const COURSE_CODE_RE = /^([a-z]{2,6})\s*-?\s*(\d{1,4}[a-z]?)$/i;
+
 function courseMatches(c, f) {
   if (f.q) {
     const haystack = [
       c.subject, c.subject_description, c.course_number, c.title, c.crn,
       ...(c.faculty || []).map((x) => x.name || ""),
     ].filter(Boolean).join(" ").toLowerCase();
-    if (!haystack.includes(f.q)) return false;
+
+    let matched = haystack.includes(f.q);
+
+    if (!matched) {
+      // Handles combined "subject + number" queries like "comp123",
+      // "COMP 123", or "comp-123" -- a plain substring check on the
+      // haystack above fails these because subject_description sits
+      // between the subject code and the course number, breaking any
+      // direct adjacency.
+      const codeMatch = f.q.match(COURSE_CODE_RE);
+      if (codeMatch) {
+        const subjPart = codeMatch[1].toLowerCase();
+        const numPart = codeMatch[2].toLowerCase();
+        const courseSubj = (c.subject || "").toLowerCase();
+        const courseNum = (c.course_number || "").toLowerCase();
+        matched = courseSubj.startsWith(subjPart) && courseNum.startsWith(numPart);
+      }
+    }
+
+    if (!matched) return false;
   }
 
   if (f.subjects.size && !f.subjects.has(c.subject)) return false;
@@ -243,7 +264,7 @@ function seatCellHTML(c) {
   else if (pct >= 85) barClass = "tight";
 
   const availLabel = avail === null || avail === undefined ? "?" : Math.max(avail, 0);
-  const estimatedTag = c.seats_estimated ? ' <span class="seat-estimated" title="Computed from enrollment/capacity -- Macalester\u2019s guest search does not always report live open-seat counts directly.">est.</span>' : "";
+  const estimatedTag = c.seats_estimated ? ' <span class="seat-estimated" title="Computed from enrollment and capacity because Banner didn\u2019t report an open-seat count directly for this section.">est.</span>' : "";
   const tooltip = overCapacity
     ? `${filled}/${max} enrolled (over capacity)`
     : `${filled}/${max} enrolled`;
@@ -372,6 +393,29 @@ function renderTermSelect() {
   sel.value = state.selectedTerm;
 }
 
+function formatUpdatedAt(isoString) {
+  if (!isoString) return "";
+  try {
+    const d = new Date(isoString);
+    return d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+  } catch (e) {
+    return "";
+  }
+}
+
+function updateLastUpdatedFooter() {
+  const stampEl = el("last-updated");
+  // Prefer the specific term's own scraped_at when one term is selected;
+  // fall back to the overall terms.json generation time for "all semesters".
+  let stamp = null;
+  if (state.selectedTerm !== "all" && state.termCache.has(state.selectedTerm)) {
+    stamp = state.termCache.get(state.selectedTerm).scraped_at;
+  }
+  if (!stamp) stamp = state.termsIndex.generated_at;
+  const formatted = formatUpdatedAt(stamp);
+  stampEl.textContent = formatted ? `data as of ${formatted}` : "";
+}
+
 // ---------------- orchestration ----------------
 
 async function refresh() {
@@ -402,6 +446,7 @@ async function refresh() {
 
   const filtered = sortCourses(courses.filter((c) => courseMatches(c, filters)));
   renderResults(filtered);
+  updateLastUpdatedFooter();
 }
 
 async function onTermChange() {

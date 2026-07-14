@@ -2,10 +2,13 @@ name: Update schedule data & deploy
 
 on:
   schedule:
-    # Runs once a day at 13:00 UTC (~8am US Central during summer/fall,
-    # 7am during winter/spring). Edit to taste -- during registration weeks
-    # you may want this hourly.
-    - cron: "0 13 * * *"
+    # Every 3 hours. Sections for terms under active registration (like
+    # an upcoming Fall term over the summer) change throughout the day;
+    # closed/past terms are skipped for the live-seat refresh entirely
+    # (see is_term_finished in term_utils.py) so this stays cheap. Go
+    # tighter (e.g. hourly, "0 * * * *") during peak registration weeks
+    # if you want fresher numbers.
+    - cron: "0 */3 * * *"
   workflow_dispatch: {}   # lets you trigger a run manually from the Actions tab
 
 permissions:

@@ -25,7 +25,7 @@
 
 <main>
   <section class="search-bar">
-    <input type="search" id="q" placeholder="Search by title, subject, course number, instructor, or CRN&hellip;" aria-label="Search courses">
+    <input type="search" id="q" placeholder="Search by title, course code (e.g. COMP 123), instructor, or CRN&hellip;" aria-label="Search courses">
     <button id="toggle-filters" class="btn-secondary" aria-expanded="false" aria-controls="filters">
       Advanced filters <span id="filter-count" class="filter-count" hidden>0</span>
     </button>
@@ -147,7 +147,6 @@
 
 <footer class="site-footer">
   <p>Unofficial tool &middot; data scraped from Macalester's public Banner class search &middot; not affiliated with the Registrar's Office &middot; <span id="last-updated"></span></p>
-  <p>Seat counts come from guest (not-logged-in) search. Macalester notes that signing in shows the most accurate open-seat numbers &mdash; treat counts marked <span class="seat-estimated">est.</span> as approximate.</p>
 </footer>
 
 <script src="app.js"></script>

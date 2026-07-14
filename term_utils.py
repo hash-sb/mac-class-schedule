@@ -121,6 +121,21 @@ def guess_current_term(terms, today=None):
     return parsed[0]["term"]
 
 
+def is_term_finished(description, today=None):
+    """
+    True if a term's rough end-of-term date has already passed (so its
+    enrollment numbers are final and can't change anymore). Unparsable
+    descriptions return False (treated as "might still be active", the
+    safer default).
+    """
+    season, year = parse_term_description(description)
+    if season is None:
+        return False
+    today = today or date.today()
+    end_m = SEASON_END_MONTH.get(season, 6)
+    return (year, end_m) < (today.year, today.month)
+
+
 def sort_terms_chronologically(terms, reverse=True):
     """Sort a list of {"code", "description"} dicts by (year, season). Newest first by default."""
     return sorted(terms, key=lambda t: term_sort_key(t.get("description", "")), reverse=reverse)

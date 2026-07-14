@@ -15,6 +15,7 @@ The real scraper will overwrite these files with real data.
 import json
 import os
 import random
+from datetime import datetime, timezone
 
 from term_utils import guess_current_term, sort_terms_chronologically
 
@@ -129,6 +130,7 @@ def make_term_courses(term_code, term_desc, seed):
 
 def main():
     os.makedirs(DATA_DIR, exist_ok=True)
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
     # A representative spread of terms: a couple past, current/upcoming, a couple future.
     terms = [
@@ -146,12 +148,15 @@ def main():
         courses = make_term_courses(t["code"], t["description"], seed=i + 1)
         path = os.path.join(DATA_DIR, f"{t['code']}.json")
         with open(path, "w") as f:
-            json.dump({"code": t["code"], "description": t["description"], "courses": courses}, f, indent=1)
+            json.dump(
+                {"code": t["code"], "description": t["description"], "scraped_at": now, "courses": courses}, f, indent=1
+            )
         print(f"wrote {len(courses)} sample sections -> {path}")
 
     current = guess_current_term(terms)
     terms_index = {
         "current_term_code": current["code"] if current else None,
+        "generated_at": now,
         "terms": [{"code": t["code"], "description": t["description"], "scraped": True} for t in terms],
     }
     with open(os.path.join(DATA_DIR, "terms.json"), "w") as f:
