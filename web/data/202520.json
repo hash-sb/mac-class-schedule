@@ -1,0 +1,126 @@
+{
+ "code": "202520",
+ "description": "January 2025 (View Only)",
+ "courses": [
+  {
+   "crn": "20003",
+   "term": "202520",
+   "term_description": "January 2025",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "621",
+   "section": "01",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 0,
+   "max_enrollment": 1,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Friedt, Felix",
+     "email": "ffriedt@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "20004",
+   "term": "202520",
+   "term_description": "January 2025",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "621",
+   "section": "35",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 0,
+   "max_enrollment": 1,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Solis-Garcia, Mario",
+     "email": "msolisga@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "20005",
+   "term": "202520",
+   "term_description": "January 2025",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "621",
+   "section": "12",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 0,
+   "max_enrollment": 1,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Strauss, Jaine",
+     "email": "strauss@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  }
+ ]
+}
