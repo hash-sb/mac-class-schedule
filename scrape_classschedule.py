@@ -176,12 +176,145 @@ def parse_via_text(visible_text):
     return hits
 
 
+CRN_IN_CELL0_RE = re.compile(r"\((\d{4,6})\)\s*$")
+INT_RE = re.compile(r"^-?\d+$")
+
+
+def extract_seat_overrides(table_rows):
+    """
+    Given the parsed row-cell-lists, pull out {crn: {seats_available,
+    max_enrollment, enrollment}}. Based on the confirmed row shape:
+        [0] "SUBJ NUM-SEC (CRN)"   e.g. "AMST 130-F1 (10018)"
+        [1] title
+        [2] "Meeting: ..."
+        [3] "Instructor: ..."
+        [4] seats available (can be negative on overrides)
+        [5] max enrollment
+    Rows that don't match this exact shape are skipped and counted, not
+    guessed at -- better to under-cover than silently merge wrong numbers.
+    """
+    overrides = {}
+    skipped = 0
+    for cells in table_rows:
+        if len(cells) < 6:
+            skipped += 1
+            continue
+        m = CRN_IN_CELL0_RE.search(cells[0])
+        if not m or not INT_RE.match(cells[4]) or not INT_RE.match(cells[5]):
+            skipped += 1
+            continue
+        crn = m.group(1)
+        seats_available = int(cells[4])
+        max_enrollment = int(cells[5])
+        overrides[crn] = {
+            "seats_available": seats_available,
+            "max_enrollment": max_enrollment,
+            "enrollment": max_enrollment - seats_available,
+        }
+    return overrides, skipped
+
+
+def merge_seat_overrides_into_term_file(term_code, overrides):
+    """
+    Patches web/data/<term_code>.json in place, overwriting seats_available/
+    max_enrollment/enrollment for any course whose CRN we found on the
+    rendered Class Schedule page. Courses not matched are left untouched
+    (keeps whatever scraper.py's bulk search API already had). Returns
+    (matched_count, total_course_count), or (0, 0) if there's no existing
+    file for this term yet.
+    """
+    path = os.path.join(DATA_DIR, f"{term_code}.json")
+    if not os.path.exists(path):
+        print(f"No existing web/data/{term_code}.json to merge into -- run scraper.py for this term first.")
+        return 0, 0
+
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    matched = 0
+    for course in data.get("courses", []):
+        ov = overrides.get(course.get("crn"))
+        if not ov:
+            continue
+        course["seats_available"] = ov["seats_available"]
+        course["max_enrollment"] = ov["max_enrollment"]
+        course["enrollment"] = ov["enrollment"]
+        course["seats_estimated"] = False
+        course["open_section"] = ov["seats_available"] > 0
+        course["seats_source"] = "class_schedule_rendered"
+        matched += 1
+
+    data["seats_refreshed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=1)
+
+    return matched, len(data.get("courses", []))
+
+
+def process_one_term(term_code, headless=True, debug=False, no_merge=False):
+    """Render, parse, and (unless no_merge) merge live seats for a single term. Returns True on success."""
+    print(f"\n=== {term_code} ===")
+    print(f"Rendering {BASE_URL}?term={term_code} ...")
+    html, visible_text = render_page(term_code, headless=headless, debug=debug)
+
+    table_rows = parse_via_tables(html)
+    text_hits = parse_via_text(visible_text) if not table_rows else []
+    print(f"parsed_count={len(table_rows)} (table strategy), {len(text_hits)} (text-line fallback)")
+
+    if not table_rows:
+        print(f"No usable table rows for {term_code} -- skipping merge for this term.")
+        return False
+
+    overrides, skipped = extract_seat_overrides(table_rows)
+    print(f"Extracted {len(overrides)} seat overrides ({skipped} rows skipped).")
+
+    if not no_merge:
+        matched, total = merge_seat_overrides_into_term_file(term_code, overrides)
+        if total:
+            print(f"Merged into web/data/{term_code}.json: {matched}/{total} courses updated.")
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--term", required=True, help="Term code, e.g. 202710 (get one from scraper.py --list-terms)")
+    group = ap.add_mutually_exclusive_group(required=True)
+    group.add_argument("--term", help="Term code, e.g. 202710 (get one from scraper.py --list-terms)")
+    group.add_argument(
+        "--all-nonfinished",
+        action="store_true",
+        help="Process every scraped term in web/data/terms.json that isn't finished yet (used by the workflow)",
+    )
     ap.add_argument("--debug", action="store_true", help="Save screenshot + HTML + visible text for inspection")
     ap.add_argument("--headed", action="store_true", help="Show the browser window instead of running headless (local debugging only)")
+    ap.add_argument(
+        "--no-merge",
+        action="store_true",
+        help="Just parse and print/save -- don't patch web/data/<term>.json (useful while still verifying)",
+    )
     args = ap.parse_args()
+
+    if args.all_nonfinished:
+        from term_utils import is_term_finished
+
+        terms_path = os.path.join(DATA_DIR, "terms.json")
+        if not os.path.exists(terms_path):
+            print("No web/data/terms.json found -- run scraper.py first.", file=sys.stderr)
+            sys.exit(1)
+        with open(terms_path, encoding="utf-8") as f:
+            terms_index = json.load(f)
+
+        targets = [
+            t for t in terms_index.get("terms", [])
+            if t.get("scraped") and not is_term_finished(t["description"])
+        ]
+        if not targets:
+            print("No non-finished scraped terms to refresh right now.")
+            return
+
+        print(f"Refreshing live seats for {len(targets)} non-finished term(s): {[t['code'] for t in targets]}")
+        for t in targets:
+            process_one_term(t["code"], headless=not args.headed, debug=args.debug, no_merge=args.no_merge)
+        return
 
     print(f"Rendering {BASE_URL}?term={args.term} ...")
     html, visible_text = render_page(args.term, headless=not args.headed, debug=args.debug)
@@ -201,6 +334,14 @@ def main():
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump({"term": args.term, "scraped_at": datetime.now(timezone.utc).isoformat(), "rows": table_rows}, f, indent=1)
             print(f"\nWrote raw parsed rows to {out_path}")
+
+        overrides, skipped = extract_seat_overrides(table_rows)
+        print(f"\nExtracted {len(overrides)} seat overrides ({skipped} rows didn't match the expected shape and were skipped).")
+
+        if not args.no_merge:
+            matched, total = merge_seat_overrides_into_term_file(args.term, overrides)
+            if total:
+                print(f"Merged into web/data/{args.term}.json: {matched}/{total} courses updated with live seat counts.")
     elif text_hits:
         print("\nNo <table> rows matched, but found course-like lines in the page text:")
         for line in text_hits[:10]:

@@ -47,16 +47,32 @@ jobs:
         id: window
         run: python registration_calendar.py
 
+      - name: Install Playwright's Chromium
+        if: steps.window.outputs.run_full == 'true'
+        run: python -m playwright install --with-deps chromium
+
       - name: Scrape current data
         if: steps.window.outputs.run_full == 'true'
         run: |
           # Refreshes the current/upcoming term plus the last several terms,
           # so "search all semesters" stays populated without re-scraping
-          # the school's entire multi-decade term history every run. The
-          # per-CRN live-seat refresh inside scraper.py is separately
-          # gated to only non-finished terms (see is_term_finished), so
-          # this stays cheap even when it does run.
-          python scraper.py --all --max-terms 16
+          # the school's entire multi-decade term history every run.
+          # --no-live-seats: the per-CRN Banner API refresh this used to do
+          # is unverified (see scraper.py) and has been superseded by the
+          # browser-rendered pass below, which reads the same Class
+          # Schedule page a human would compare against.
+          python scraper.py --all --max-terms 16 --no-live-seats
+
+      - name: Refresh live seat counts from the Class Schedule page
+        if: steps.window.outputs.run_full == 'true'
+        run: |
+          # Renders macadmsys.macalester.edu's Class Schedule page (a
+          # different Banner host/environment than the search API above)
+          # with a real headless browser and patches seats_available/
+          # max_enrollment onto whatever scraper.py already collected, for
+          # every term that isn't finished yet -- this is the numbers
+          # source confirmed to match what you see on the actual site.
+          python scrape_classschedule.py --all-nonfinished
 
       - name: Configure Pages
         if: steps.window.outputs.run_full == 'true'
