@@ -6,9 +6,14 @@ run entirely on GitHub Pages + GitHub Actions -- no server to host or pay for.
 - **Scraper** (`scraper.py`) pulls course data from Macalester's public
   Banner 9 class search (the same "Browse Classes" tool at
   `oci-macxe.macalester.edu` that students already use -- no login required).
-- **GitHub Actions** (`.github/workflows/update-schedule.yml`) runs the
-  scraper on a daily schedule, commits the refreshed JSON, and redeploys
-  the site.
+- **`registration_calendar.py`** reads Macalester's live Academic Calendar
+  page each run and decides whether today falls inside an early-registration
+  window or the first-couple-weeks add/drop period for any term -- no
+  hardcoded dates, so it stays correct year over year automatically.
+- **GitHub Actions** (`.github/workflows/update-schedule.yml`) checks that
+  window every hour and only does a full scrape + redeploy when it matters
+  (inside a window, or once a day as a baseline) -- otherwise it's a fast
+  no-op, so this stays cheap to run continuously.
 - **Frontend** (`web/`) is a plain HTML/CSS/JS static site -- no build step,
   no framework, no backend. It loads the JSON straight out of `web/data/`
   and does all searching/filtering/sorting in the browser. Defaults to the
@@ -19,13 +24,42 @@ run entirely on GitHub Pages + GitHub Actions -- no server to host or pay for.
 ## How the pieces fit together
 
 ```
+registration_calendar.py ──reads──▶ Macalester's live Academic Calendar
+        │
+        ▼ (only when today is inside a window, or once/day as baseline)
 scraper.py ──writes──▶ web/data/<term_code>.json   (one file per term)
                         web/data/terms.json         (index + "current term")
 web/index.html, style.css, app.js ──reads──▶ web/data/*.json  (client-side fetch)
 ```
 
 Nothing in `web/` ever talks to Macalester's servers directly -- only
-`scraper.py` does that, and only when GitHub Actions (or you, locally) runs it.
+`scraper.py` and `registration_calendar.py` do that, and only when GitHub
+Actions (or you, locally) runs them.
+
+## How the scrape frequency works
+
+The workflow's cron fires every hour, but `registration_calendar.py` runs
+first and decides whether the rest of the job actually does anything:
+
+- **Inside a window** (early registration for any term, or the first
+  couple weeks of a term when students are adding/dropping) -> full scrape
+  + redeploy, every hour.
+- **Otherwise** -> skipped, except once a day at a fixed baseline hour
+  (13:00 UTC by default -- see `BASELINE_HOUR_UTC` in
+  `registration_calendar.py`) so the catalog still stays reasonably fresh
+  even during quiet periods.
+
+Within a scrape itself, `scraper.py` separately only does the expensive
+per-CRN live-seat refresh for terms that aren't finished yet (see
+`is_term_finished` in `term_utils.py`) -- so even a "full scrape" stays
+fast, since closed terms just reuse their bulk-search snapshot.
+
+Run `python registration_calendar.py --debug` any time to see every window
+it parsed off the live calendar page and whether today falls inside one --
+useful both for sanity-checking and if Macalester ever restructures that
+page (parsing fails safe: if it can't find any windows, it treats today as
+"not active" rather than erroring out, so you'll just fall back to the
+once-daily baseline until the parsing is fixed).
 
 ## Setting it up on GitHub
 
@@ -80,6 +114,8 @@ python scraper.py --list-terms          # see every term code Banner knows about
 python scraper.py --current             # scrape just the current/upcoming term
 python scraper.py --term 202630         # scrape one specific term code
 python scraper.py --all --max-terms 12  # scrape the 12 most recent terms
+
+python registration_calendar.py --debug # see whether today is inside a registration/add-drop window
 ```
 
 Each run writes into `web/data/`. Preview the site locally with any static

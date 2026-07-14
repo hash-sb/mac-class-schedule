@@ -2,13 +2,12 @@ name: Update schedule data & deploy
 
 on:
   schedule:
-    # Every 3 hours. Sections for terms under active registration (like
-    # an upcoming Fall term over the summer) change throughout the day;
-    # closed/past terms are skipped for the live-seat refresh entirely
-    # (see is_term_finished in term_utils.py) so this stays cheap. Go
-    # tighter (e.g. hourly, "0 * * * *") during peak registration weeks
-    # if you want fresher numbers.
-    - cron: "0 */3 * * *"
+    # Fires every hour, but most hours end up being a fast no-op: the
+    # first step reads Macalester's live Academic Calendar and only lets
+    # the rest of the job run if today falls inside a registration or
+    # add/drop window, or it's the once-daily baseline hour. See
+    # registration_calendar.py for the full logic.
+    - cron: "0 * * * *"
   workflow_dispatch: {}   # lets you trigger a run manually from the Actions tab
 
 permissions:
@@ -44,21 +43,36 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check registration window
+        id: window
+        run: python registration_calendar.py
+
       - name: Scrape current data
+        if: steps.window.outputs.run_full == 'true'
         run: |
           # Refreshes the current/upcoming term plus the last several terms,
           # so "search all semesters" stays populated without re-scraping
-          # the school's entire multi-decade term history every run.
+          # the school's entire multi-decade term history every run. The
+          # per-CRN live-seat refresh inside scraper.py is separately
+          # gated to only non-finished terms (see is_term_finished), so
+          # this stays cheap even when it does run.
           python scraper.py --all --max-terms 16
 
       - name: Configure Pages
+        if: steps.window.outputs.run_full == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload site
+        if: steps.window.outputs.run_full == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: web
 
       - name: Deploy to GitHub Pages
+        if: steps.window.outputs.run_full == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Skipped this hour
+        if: steps.window.outputs.run_full != 'true'
+        run: echo "Not in a registration/add-drop window and not the daily baseline hour -- skipping scrape and deploy this run."
