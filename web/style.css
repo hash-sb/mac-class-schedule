@@ -295,7 +295,7 @@ main{
 #results-table{
   width:100%;
   border-collapse:collapse;
-  min-width:820px;
+  min-width:880px;
 }
 
 #results-table thead th{
@@ -350,8 +350,43 @@ main{
 
 .meet-line + .meet-line{ margin-top:0.2rem; }
 
-.seats-open{ color:#2f7a3e; font-weight:700; font-family:var(--mono); }
-.seats-full{ color:var(--scarlet); font-weight:700; font-family:var(--mono); }
+.seat-cell{
+  width:100%;
+  min-width:5.5rem;
+}
+
+.seat-text{
+  font-family:var(--mono);
+  font-size:0.75rem;
+  white-space:nowrap;
+  display:block;
+  margin-bottom:0.3rem;
+}
+
+.seat-estimated{
+  color:var(--ink-soft);
+  font-style:italic;
+  font-size:0.68rem;
+  cursor:help;
+  border-bottom:1px dotted var(--ink-soft);
+}
+
+.seat-bar-track{
+  height:5px;
+  width:100%;
+  background:var(--line);
+  border-radius:3px;
+  overflow:hidden;
+}
+
+.seat-bar-fill{
+  height:100%;
+  border-radius:3px;
+}
+
+.seat-bar-fill.ok{ background:#2f7a3e; }
+.seat-bar-fill.tight{ background:var(--brass); }
+.seat-bar-fill.full{ background:var(--scarlet); }
 
 .term-tag{
   font-family:var(--mono);

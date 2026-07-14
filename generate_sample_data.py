@@ -79,8 +79,12 @@ def make_term_courses(term_code, term_desc, seed):
                 start_time = f"{start_total // 60:02d}{start_total % 60:02d}"
                 end_time = f"{end_total // 60:02d}{end_total % 60:02d}"
                 max_enroll = rng.choice([12, 16, 20, 24, 30])
-                enrolled = rng.randint(0, max_enroll)
+                enrolled = rng.randint(0, max_enroll + 2)  # occasionally over capacity, like real overrides
                 seats = max_enroll - enrolled
+                seats_estimated = False
+                if rng.random() < 0.15:
+                    # Simulate the guest-search gap: seatsAvailable missing, computed instead.
+                    seats_estimated = True
                 faculty_name = rng.choice(FACULTY_NAMES)
 
                 courses.append(
@@ -99,6 +103,7 @@ def make_term_courses(term_code, term_desc, seed):
                         "instructional_method": "In Person",
                         "part_of_term": "Full Term",
                         "seats_available": seats,
+                        "seats_estimated": seats_estimated,
                         "max_enrollment": max_enroll,
                         "enrollment": enrolled,
                         "waitlist_available": 5 if seats == 0 else 0,

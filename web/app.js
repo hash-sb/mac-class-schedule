@@ -159,7 +159,11 @@ function sortCourses(courses) {
     title: (c) => c.title || "",
     instructor: (c) => (c.faculty && c.faculty[0] && c.faculty[0].name) || "",
     credits: (c) => (c.credit_hours != null ? c.credit_hours : 0),
-    seats: (c) => (c.seats_available != null ? c.seats_available : -999),
+    seats: (c) => {
+      if (c.seats_available !== null && c.seats_available !== undefined) return c.seats_available;
+      if (c.max_enrollment != null && c.enrollment != null) return c.max_enrollment - c.enrollment;
+      return -999;
+    },
     subject: (c) => `${c.subject || ""} ${c.course_number || ""}`,
   }[state.sortBy] || ((c) => `${c.subject || ""} ${c.course_number || ""}`);
 
@@ -218,6 +222,39 @@ function escapeHTML(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
+function seatCellHTML(c) {
+  const max = c.max_enrollment;
+  const enrolled = c.enrollment;
+  const avail = c.seats_available;
+
+  if (max === null || max === undefined || max <= 0) {
+    return '<span class="seat-text">&mdash;</span>';
+  }
+
+  // Prefer computing "filled" from enrollment when we have it; otherwise
+  // derive it from max - available seats.
+  const filled = enrolled !== null && enrolled !== undefined ? enrolled : max - (avail !== null && avail !== undefined ? avail : 0);
+  const pct = Math.max(0, Math.min(100, (filled / max) * 100));
+
+  let barClass = "ok";
+  const overCapacity = filled > max;
+  const isFull = (avail !== null && avail !== undefined && avail <= 0) || overCapacity;
+  if (isFull) barClass = "full";
+  else if (pct >= 85) barClass = "tight";
+
+  const availLabel = avail === null || avail === undefined ? "?" : Math.max(avail, 0);
+  const estimatedTag = c.seats_estimated ? ' <span class="seat-estimated" title="Computed from enrollment/capacity -- Macalester\u2019s guest search does not always report live open-seat counts directly.">est.</span>' : "";
+  const tooltip = overCapacity
+    ? `${filled}/${max} enrolled (over capacity)`
+    : `${filled}/${max} enrolled`;
+
+  return `
+    <div class="seat-cell" title="${escapeHTML(tooltip)}">
+      <span class="seat-text">${availLabel} open of ${max}${estimatedTag}</span>
+      <div class="seat-bar-track"><div class="seat-bar-fill ${barClass}" style="width:${pct}%"></div></div>
+    </div>`;
+}
+
 function renderResults(courses) {
   const tbody = el("results-body");
   tbody.innerHTML = "";
@@ -232,13 +269,6 @@ function renderResults(courses) {
     if (c.open_section) tr.classList.add("is-open");
 
     const instructors = (c.faculty || []).map((f) => f.name).filter(Boolean).join(", ") || "\u2014";
-    const seats = c.seats_available;
-    const seatsHTML =
-      seats === null || seats === undefined
-        ? "&mdash;"
-        : seats > 0
-        ? `<span class="seats-open">${seats} open</span>`
-        : `<span class="seats-full">full</span>`;
 
     tr.innerHTML = `
       <td>
@@ -250,7 +280,7 @@ function renderResults(courses) {
       <td>${renderLocations(c)}</td>
       <td>${escapeHTML(instructors)}</td>
       <td>${c.credit_hours != null ? c.credit_hours : "&mdash;"}</td>
-      <td>${seatsHTML}</td>
+      <td>${seatCellHTML(c)}</td>
       <td class="term-tag" ${showTermCol ? "" : "hidden"}>${escapeHTML(c.term_description || "")}</td>
     `;
     tbody.appendChild(tr);

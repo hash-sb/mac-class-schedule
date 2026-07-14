@@ -172,6 +172,25 @@ def parse_section(raw):
         for f in raw.get("faculty", []) or []
     ]
 
+    max_enrollment = raw.get("maximumEnrollment")
+    enrollment = raw.get("enrollment")
+    seats_available = raw.get("seatsAvailable")
+    seats_is_estimated = False
+
+    # Guest (not-logged-in) Banner search sometimes omits seatsAvailable, or
+    # returns it inconsistently, even when maximumEnrollment and enrollment
+    # are present -- Macalester's own site notes that fully accurate
+    # open-seat counts require signing in. Fall back to computing it
+    # ourselves when we can, and flag it as estimated so the frontend can
+    # be transparent about that instead of silently showing a wrong number.
+    if seats_available is None and max_enrollment is not None and enrollment is not None:
+        seats_available = max_enrollment - enrollment
+        seats_is_estimated = True
+
+    open_section = raw.get("openSection")
+    if open_section is None and seats_available is not None:
+        open_section = seats_available > 0
+
     return {
         "crn": raw.get("courseReferenceNumber"),
         "term": raw.get("term"),
@@ -186,12 +205,13 @@ def parse_section(raw):
         "campus": raw.get("campusDescription"),
         "instructional_method": raw.get("instructionalMethodDescription"),
         "part_of_term": raw.get("partOfTermDesc"),
-        "seats_available": raw.get("seatsAvailable"),
-        "max_enrollment": raw.get("maximumEnrollment"),
-        "enrollment": raw.get("enrollment"),
+        "seats_available": seats_available,
+        "seats_estimated": seats_is_estimated,
+        "max_enrollment": max_enrollment,
+        "enrollment": enrollment,
         "waitlist_available": raw.get("waitAvailable"),
         "waitlist_capacity": raw.get("waitCapacity"),
-        "open_section": raw.get("openSection"),
+        "open_section": open_section,
         "faculty": faculty,
         "meetings": meetings,
     }
