@@ -217,9 +217,13 @@ The real scraper will overwrite these files the next time it runs.
 ## Search features
 
 - Free-text search across title, subject, course number, CRN, and instructor
-- Filter by subject (multi-select), instructor, days of week, meeting-time
-  window, credit hours, campus, section type, open-seats-only, and CRN
-- Sort by subject/number, title, instructor, credits, or open seats
+  -- supports real regular expressions (e.g. `^comp`), and `&` as an AND
+  operator to combine terms (e.g. `COMP 123 & Amin`)
+- Filter by subject (multi-select), instructor, CRN, meeting days (exact
+  patterns pulled from whatever's actually offered that semester, e.g.
+  `MWF`, `TR`, `M`), meeting-time window, and seat status (any / open only
+  / closed only)
+- Sort by subject/number, title, instructor, or open seats
 - View one semester or **all semesters at once**
 - Defaults to whatever semester is current or coming up next, computed from
   today's date -- no hardcoded term codes to update every year

@@ -99,6 +99,32 @@ def maybe_trigger_search(page):
     return False
 
 
+def maybe_refresh_open_seats(page):
+    """
+    Best-effort: some Banner Page Builder views show a snapshot of seat
+    counts until you click an "Update Open Seats" control -- click it if
+    present so we capture live numbers instead of whatever was cached at
+    initial page load. Tries both <button> and plain clickable text, since
+    Page Builder controls aren't always real <button> elements.
+    """
+    for text in ["Update Open Seats", "Update Seats", "Refresh Seats", "Update Availability"]:
+        try:
+            btn = page.get_by_role("button", name=text, exact=False)
+            if btn.count() > 0:
+                btn.first.click(timeout=2000)
+                return True
+        except Exception:
+            pass
+        try:
+            link = page.get_by_text(text, exact=False)
+            if link.count() > 0:
+                link.first.click(timeout=2000)
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def render_page(term_code, headless=True, debug=False, extra_wait_ms=3000):
     """Loads the Class Schedule page for a term with a real browser and returns (html, visible_text)."""
     url = f"{BASE_URL}?term={term_code}"
@@ -117,6 +143,18 @@ def render_page(term_code, headless=True, debug=False, extra_wait_ms=3000):
             page.wait_for_load_state("networkidle", timeout=15000)
         except Exception:
             pass  # fine if it never goes fully idle again; we already waited
+
+        # Now that the table's loaded once, try to force a live seat refresh
+        # rather than trust whatever was in the initial snapshot.
+        if maybe_refresh_open_seats(page):
+            print("  clicked 'Update Open Seats' -- waiting for refreshed numbers...")
+            page.wait_for_timeout(2000)
+            try:
+                page.wait_for_load_state("networkidle", timeout=15000)
+            except Exception:
+                pass
+        else:
+            print("  no 'Update Open Seats' control found -- using the page's initial numbers.")
 
         html = page.content()
         visible_text = page.inner_text("body")

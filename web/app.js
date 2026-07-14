@@ -10,9 +10,9 @@ const state = {
   termsIndex: { current_term_code: null, terms: [] },
   termCache: new Map(), // code -> {code, description, courses}
   selectedTerm: null,   // a term code, or "all"
-  meta: { subjects: [], instructors: [], campuses: [], scheduleTypes: [] },
+  meta: { subjects: [], instructors: [], dayPatterns: [] },
   selectedSubjects: new Set(),
-  selectedDays: new Set(),
+  selectedDays: new Set(),  // exact meeting-day patterns, e.g. "MWF", "TR"
   page: 1,
   sortBy: "subject",
   sortDir: "asc",
@@ -71,20 +71,22 @@ function parseTimeToMinutes(hhmm) {
   return h * 60 + m;
 }
 
+function buildSearchClauses(query) {
+  // "&" is our AND operator between clauses, e.g. "COMP 123 & Amin"
+  return query.split("&").map((s) => s.trim()).filter(Boolean);
+}
+
 function readFilters() {
   const startAfter = el("start-after").value; // "HH:MM" or ""
   const endBefore = el("end-before").value;
+  const qRaw = el("q").value.trim();
   return {
-    q: el("q").value.trim().toLowerCase(),
+    qClauses: buildSearchClauses(qRaw),
     subjects: state.selectedSubjects,
     instructor: el("instructor").value.trim().toLowerCase(),
     crn: el("crn").value.trim(),
-    campus: el("campus").value,
-    scheduleType: el("schedule-type").value,
-    openOnly: el("open-only").checked,
+    seatStatus: el("seat-status").value, // "", "open", "closed"
     days: state.selectedDays,
-    creditsMin: el("credits-min").value ? parseFloat(el("credits-min").value) : null,
-    creditsMax: el("credits-max").value ? parseFloat(el("credits-max").value) : null,
     startAfterMin: startAfter ? parseInt(startAfter.split(":")[0], 10) * 60 + parseInt(startAfter.split(":")[1], 10) : null,
     endBeforeMin: endBefore ? parseInt(endBefore.split(":")[0], 10) * 60 + parseInt(endBefore.split(":")[1], 10) : null,
   };
@@ -92,16 +94,12 @@ function readFilters() {
 
 function activeFilterCount(f) {
   let n = 0;
-  if (f.q) n++;
+  if (f.qClauses.length) n++;
   if (f.subjects.size) n++;
   if (f.instructor) n++;
   if (f.crn) n++;
-  if (f.campus) n++;
-  if (f.scheduleType) n++;
-  if (f.openOnly) n++;
+  if (f.seatStatus) n++;
   if (f.days.size) n++;
-  if (f.creditsMin !== null) n++;
-  if (f.creditsMax !== null) n++;
   if (f.startAfterMin !== null) n++;
   if (f.endBeforeMin !== null) n++;
   return n;
@@ -109,32 +107,35 @@ function activeFilterCount(f) {
 
 const COURSE_CODE_RE = /^([a-z]{2,6})\s*-?\s*(\d{1,4}[a-z]?)$/i;
 
+/** Does ONE search clause match this course? Tries the course-code shortcut
+ * first, then treats the clause as a case-insensitive regex, falling back
+ * to a plain substring check if the clause isn't valid regex syntax. */
+function clauseMatchesCourse(clause, haystackLower, c) {
+  const codeMatch = clause.match(COURSE_CODE_RE);
+  if (codeMatch) {
+    const courseSubj = (c.subject || "").toLowerCase();
+    const courseNum = (c.course_number || "").toLowerCase();
+    if (courseSubj.startsWith(codeMatch[1].toLowerCase()) && courseNum.startsWith(codeMatch[2].toLowerCase())) {
+      return true;
+    }
+  }
+  try {
+    const re = new RegExp(clause, "i");
+    return re.test(haystackLower);
+  } catch (e) {
+    return haystackLower.includes(clause.toLowerCase());
+  }
+}
+
 function courseMatches(c, f) {
-  if (f.q) {
+  if (f.qClauses.length) {
     const haystack = [
       c.subject, c.subject_description, c.course_number, c.title, c.crn,
       ...(c.faculty || []).map((x) => x.name || ""),
     ].filter(Boolean).join(" ").toLowerCase();
 
-    let matched = haystack.includes(f.q);
-
-    if (!matched) {
-      // Handles combined "subject + number" queries like "comp123",
-      // "COMP 123", or "comp-123" -- a plain substring check on the
-      // haystack above fails these because subject_description sits
-      // between the subject code and the course number, breaking any
-      // direct adjacency.
-      const codeMatch = f.q.match(COURSE_CODE_RE);
-      if (codeMatch) {
-        const subjPart = codeMatch[1].toLowerCase();
-        const numPart = codeMatch[2].toLowerCase();
-        const courseSubj = (c.subject || "").toLowerCase();
-        const courseNum = (c.course_number || "").toLowerCase();
-        matched = courseSubj.startsWith(subjPart) && courseNum.startsWith(numPart);
-      }
-    }
-
-    if (!matched) return false;
+    const allMatch = f.qClauses.every((clause) => clauseMatchesCourse(clause, haystack, c));
+    if (!allMatch) return false;
   }
 
   if (f.subjects.size && !f.subjects.has(c.subject)) return false;
@@ -145,16 +146,14 @@ function courseMatches(c, f) {
   }
 
   if (f.crn && !(c.crn || "").includes(f.crn)) return false;
-  if (f.campus && c.campus !== f.campus) return false;
-  if (f.scheduleType && c.schedule_type !== f.scheduleType) return false;
-  if (f.openOnly && !c.open_section) return false;
 
-  if (f.creditsMin !== null && (c.credit_hours === null || c.credit_hours === undefined || c.credit_hours < f.creditsMin)) return false;
-  if (f.creditsMax !== null && (c.credit_hours === null || c.credit_hours === undefined || c.credit_hours > f.creditsMax)) return false;
+  if (f.seatStatus === "open" && c.open_section !== true) return false;
+  if (f.seatStatus === "closed" && c.open_section !== false) return false;
 
   if (f.days.size) {
+    // Exact meeting-pattern match (e.g. "MWF", "TR"), not "any single day in common".
     const meetings = c.meetings || [];
-    const hit = meetings.some((m) => [...f.days].some((d) => (m.days || "").includes(d)));
+    const hit = meetings.some((m) => m.days && f.days.has(m.days));
     if (!hit) return false;
   }
 
@@ -179,7 +178,6 @@ function sortCourses(courses) {
   const keyFn = {
     title: (c) => c.title || "",
     instructor: (c) => (c.faculty && c.faculty[0] && c.faculty[0].name) || "",
-    credits: (c) => (c.credit_hours != null ? c.credit_hours : 0),
     seats: (c) => {
       if (c.seats_available !== null && c.seats_available !== undefined) return c.seats_available;
       if (c.max_enrollment != null && c.enrollment != null) return c.max_enrollment - c.enrollment;
@@ -300,7 +298,6 @@ function renderResults(courses) {
       <td>${renderMeetings(c)}</td>
       <td>${renderLocations(c)}</td>
       <td>${escapeHTML(instructors)}</td>
-      <td>${c.credit_hours != null ? c.credit_hours : "&mdash;"}</td>
       <td>${seatCellHTML(c)}</td>
       <td class="term-tag" ${showTermCol ? "" : "hidden"}>${escapeHTML(c.term_description || "")}</td>
     `;
@@ -343,33 +340,47 @@ function renderMeta() {
   const instrList = el("instructor-list");
   instrList.innerHTML = state.meta.instructors.map((n) => `<option value="${escapeHTML(n)}">`).join("");
 
-  const campusSel = el("campus");
-  campusSel.innerHTML =
-    `<option value="">Any campus</option>` +
-    state.meta.campuses.map((c) => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+  const dayContainer = el("day-toggles");
+  dayContainer.innerHTML = "";
+  for (const pattern of state.meta.dayPatterns) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "day-btn";
+    btn.textContent = pattern;
+    if (state.selectedDays.has(pattern)) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("active");
+      if (state.selectedDays.has(pattern)) state.selectedDays.delete(pattern);
+      else state.selectedDays.add(pattern);
+      state.page = 1;
+      refresh();
+    });
+    dayContainer.appendChild(btn);
+  }
+}
 
-  const typeSel = el("schedule-type");
-  typeSel.innerHTML =
-    `<option value="">Any type</option>` +
-    state.meta.scheduleTypes.map((t) => `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`).join("");
+// Rough day-of-week order, used only to sort pattern buttons sensibly (MWF before TR before Sa).
+const DAY_ORDER = "MTWRFSU";
+function dayPatternSortKey(pattern) {
+  return [...pattern].map((c) => DAY_ORDER.indexOf(c)).join("");
 }
 
 function computeMeta(courses) {
   const subjects = new Map();
   const instructors = new Set();
-  const campuses = new Set();
-  const scheduleTypes = new Set();
+  const dayPatterns = new Set();
   for (const c of courses) {
     if (c.subject) subjects.set(c.subject, c.subject_description || c.subject);
     for (const f of c.faculty || []) if (f.name) instructors.add(f.name);
-    if (c.campus) campuses.add(c.campus);
-    if (c.schedule_type) scheduleTypes.add(c.schedule_type);
+    for (const m of c.meetings || []) if (m.days) dayPatterns.add(m.days);
   }
   state.meta = {
     subjects: [...subjects.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([code, description]) => ({ code, description })),
     instructors: [...instructors].sort(),
-    campuses: [...campuses].sort(),
-    scheduleTypes: [...scheduleTypes].sort(),
+    dayPatterns: [...dayPatterns].sort((a, b) => {
+      if (a.length !== b.length) return a.length - b.length;
+      return dayPatternSortKey(a).localeCompare(dayPatternSortKey(b));
+    }),
   };
 }
 
@@ -453,6 +464,7 @@ async function onTermChange() {
   state.selectedTerm = el("term-select").value;
   state.page = 1;
   state.selectedSubjects.clear();
+  state.selectedDays.clear();
 
   const courses = await getActiveCourses();
   computeMeta(courses || []);
@@ -472,24 +484,10 @@ function wireStaticControls() {
     }, 180);
   };
 
-  ["q", "instructor", "crn", "credits-min", "credits-max", "start-after", "end-before"].forEach((id) => {
+  ["q", "instructor", "crn", "start-after", "end-before"].forEach((id) => {
     el(id).addEventListener("input", debouncedRefresh);
   });
-  ["campus", "schedule-type"].forEach((id) => {
-    el(id).addEventListener("change", debouncedRefresh);
-  });
-  el("open-only").addEventListener("change", debouncedRefresh);
-
-  document.querySelectorAll(".day-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const day = btn.dataset.day;
-      btn.classList.toggle("active");
-      if (state.selectedDays.has(day)) state.selectedDays.delete(day);
-      else state.selectedDays.add(day);
-      state.page = 1;
-      refresh();
-    });
-  });
+  el("seat-status").addEventListener("change", debouncedRefresh);
 
   el("toggle-filters").addEventListener("click", () => {
     const panel = el("filters");
@@ -502,16 +500,11 @@ function wireStaticControls() {
     el("q").value = "";
     el("instructor").value = "";
     el("crn").value = "";
-    el("credits-min").value = "";
-    el("credits-max").value = "";
     el("start-after").value = "";
     el("end-before").value = "";
-    el("open-only").checked = false;
-    el("campus").value = "";
-    el("schedule-type").value = "";
+    el("seat-status").value = "";
     state.selectedSubjects.clear();
     state.selectedDays.clear();
-    document.querySelectorAll(".day-btn.active").forEach((b) => b.classList.remove("active"));
     renderMeta();
     state.page = 1;
     refresh();
