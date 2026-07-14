@@ -1,0 +1,486 @@
+{
+ "code": "202540",
+ "description": "Summer I 2025 (View Only)",
+ "courses": [
+  {
+   "crn": "42061",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "AMST",
+   "subject_description": "American Studies",
+   "course_number": "621",
+   "section": "06",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Sailiata, Kirisitina",
+     "email": "ksailiat@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42066",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "621",
+   "section": "21",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Manning, Christie",
+     "email": "cmanning@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42069",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "611",
+   "section": "33",
+   "title": "Independent Project",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Independent Project",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Jackson, Bret",
+     "email": "bjackson@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42063",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "621",
+   "section": "01",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 3,
+   "max_enrollment": 5,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Onsongo, Getiria",
+     "email": "gonsongo@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42060",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "621",
+   "section": "05",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Beveridge, Andrew",
+     "email": "abeverid@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42070",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "621",
+   "section": "11",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Milne, Lauren",
+     "email": "lmilne@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42067",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "621",
+   "section": "13",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Johnson, Alicia",
+     "email": "ajohns24@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42068",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "INTL",
+   "subject_description": "International Studies",
+   "course_number": "621",
+   "section": "19",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Voller, Vanessa",
+     "email": "vvoller@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42065",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "MCST",
+   "subject_description": "Media and Cultural Studies",
+   "course_number": "621",
+   "section": "02",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 3,
+   "max_enrollment": 5,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Stiffler, Brad",
+     "email": "bstiffler@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42059",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "611",
+   "section": "27",
+   "title": "Independent Project",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Independent Project",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Weber, Wendy",
+     "email": "weberw@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42062",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "621",
+   "section": "20",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 3,
+   "max_enrollment": 5,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Lavery, Lesley",
+     "email": "llavery@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "42064",
+   "term": "202540",
+   "term_description": "Summer I 2025",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "621",
+   "section": "01",
+   "title": "Internship",
+   "credit_hours": 1,
+   "schedule_type": "Independent Study",
+   "campus": "Main",
+   "instructional_method": "Internship",
+   "part_of_term": null,
+   "seats_available": 4,
+   "max_enrollment": 5,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "James, Ariel",
+     "email": "ajames2@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  }
+ ]
+}

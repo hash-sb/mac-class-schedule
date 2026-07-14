@@ -1,0 +1,46 @@
+{
+ "code": "202320",
+ "description": "January 2023 (View Only)",
+ "courses": [
+  {
+   "crn": "20007",
+   "term": "202320",
+   "term_description": "January 2023",
+   "subject": "CLAS",
+   "subject_description": "Classics",
+   "course_number": "155",
+   "section": "01",
+   "title": "January in Rome",
+   "credit_hours": 2,
+   "schedule_type": "Class",
+   "campus": "Main",
+   "instructional_method": null,
+   "part_of_term": null,
+   "seats_available": 3,
+   "max_enrollment": 25,
+   "enrollment": 22,
+   "waitlist_available": 0,
+   "waitlist_capacity": 0,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "Severy-Hoven, Beth",
+     "email": "severy@macalester.edu",
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "",
+     "start_time": null,
+     "end_time": null,
+     "building": null,
+     "building_description": null,
+     "room": null,
+     "campus": null,
+     "meeting_type": "Class"
+    }
+   ]
+  }
+ ]
+}
