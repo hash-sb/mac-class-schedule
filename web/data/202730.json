@@ -1,0 +1,3046 @@
+{
+ "code": "202730",
+ "description": "Spring 2027",
+ "courses": [
+  {
+   "crn": "10504",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "120",
+   "section": "01",
+   "title": "Advanced Art Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1430",
+     "end_time": "1520",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "328",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10507",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "265",
+   "section": "01",
+   "title": "Art and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 16,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0800",
+     "end_time": "0905",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "353",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10513",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "235",
+   "section": "01",
+   "title": "Foundations of Art",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 30,
+   "enrollment": 29,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1000",
+     "end_time": "1105",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "161",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10518",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "310",
+   "section": "01",
+   "title": "Art: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 24,
+   "enrollment": 18,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1030",
+     "end_time": "1150",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "312",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10524",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "310",
+   "section": "02",
+   "title": "Art: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 24,
+   "enrollment": 21,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1330",
+     "end_time": "1420",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "289",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10527",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "100",
+   "section": "01",
+   "title": "Research Methods in Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 16,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1330",
+     "end_time": "1450",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "376",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10534",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "235",
+   "section": "01",
+   "title": "Biology Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 30,
+   "enrollment": 19,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1130",
+     "end_time": "1250",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "365",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10538",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "235",
+   "section": "01",
+   "title": "Biology Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 24,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1300",
+     "end_time": "1420",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "375",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10545",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Research Methods in Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 30,
+   "enrollment": 25,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1300",
+     "end_time": "1350",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "108",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10547",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "394",
+   "section": "01",
+   "title": "Introduction to Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 18,
+   "max_enrollment": 20,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1500",
+     "end_time": "1605",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "239",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10551",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "265",
+   "section": "01",
+   "title": "Research Methods in Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 7,
+   "max_enrollment": 20,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0830",
+     "end_time": "0935",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "361",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10552",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "340",
+   "section": "01",
+   "title": "Introduction to Chemistry",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 30,
+   "enrollment": 21,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0800",
+     "end_time": "0905",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "368",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10558",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "100",
+   "section": "01",
+   "title": "Chemistry Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 16,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1430",
+     "end_time": "1520",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "252",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10560",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "200",
+   "section": "01",
+   "title": "Chemistry Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 2,
+   "max_enrollment": 16,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1500",
+     "end_time": "1620",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "277",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10565",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "120",
+   "section": "01",
+   "title": "Chemistry and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 30,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0830",
+     "end_time": "0935",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "109",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10567",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "120",
+   "section": "02",
+   "title": "Chemistry and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 18,
+   "max_enrollment": 24,
+   "enrollment": 6,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1500",
+     "end_time": "1605",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "373",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10568",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "235",
+   "section": "01",
+   "title": "Intermediate Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 20,
+   "enrollment": 19,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0900",
+     "end_time": "1005",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "274",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10575",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "120",
+   "section": "01",
+   "title": "Advanced Computer Science Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 12,
+   "enrollment": 6,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0900",
+     "end_time": "1005",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "274",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10580",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "120",
+   "section": "01",
+   "title": "Computer Science Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 20,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1300",
+     "end_time": "1405",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "155",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10585",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "100",
+   "section": "01",
+   "title": "Advanced Computer Science Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1100",
+     "end_time": "1150",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "330",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10591",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "200",
+   "section": "01",
+   "title": "Computer Science and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 20,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1250",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "120",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10597",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "100",
+   "section": "01",
+   "title": "Introduction to Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 24,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "228",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10599",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "394",
+   "section": "01",
+   "title": "Foundations of Economics",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 18,
+   "max_enrollment": 20,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1000",
+     "end_time": "1050",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "394",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10602",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "310",
+   "section": "01",
+   "title": "Economics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 13,
+   "max_enrollment": 20,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "212",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10603",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "310",
+   "section": "02",
+   "title": "Economics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 12,
+   "enrollment": 11,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0830",
+     "end_time": "0950",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "283",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10604",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "394",
+   "section": "01",
+   "title": "Research Methods in Economics",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 16,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0800",
+     "end_time": "0850",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "164",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10611",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "235",
+   "section": "01",
+   "title": "Topics in Economics",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 7,
+   "max_enrollment": 20,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "229",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10616",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "394",
+   "section": "01",
+   "title": "English Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 20,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1100",
+     "end_time": "1205",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "392",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10621",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "100",
+   "section": "01",
+   "title": "Introduction to English",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 20,
+   "enrollment": 12,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0900",
+     "end_time": "1005",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "219",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10626",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "394",
+   "section": "01",
+   "title": "Introduction to English",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1430",
+     "end_time": "1550",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "311",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10627",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "265",
+   "section": "01",
+   "title": "History and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 20,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0900",
+     "end_time": "1005",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "143",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10629",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "120",
+   "section": "01",
+   "title": "History: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1100",
+     "end_time": "1220",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "363",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10636",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "120",
+   "section": "02",
+   "title": "History: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 12,
+   "enrollment": 12,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1400",
+     "end_time": "1520",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "171",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10643",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "120",
+   "section": "01",
+   "title": "Research Methods in History",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 20,
+   "max_enrollment": 24,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1100",
+     "end_time": "1205",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "320",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10646",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "340",
+   "section": "01",
+   "title": "Intermediate History",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 16,
+   "max_enrollment": 30,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1400",
+     "end_time": "1450",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "233",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10648",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "235",
+   "section": "01",
+   "title": "Topics in History",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1030",
+     "end_time": "1150",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "162",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10655",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "340",
+   "section": "01",
+   "title": "Mathematics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 20,
+   "enrollment": 20,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "323",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10656",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "310",
+   "section": "01",
+   "title": "Mathematics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 20,
+   "enrollment": 17,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1430",
+     "end_time": "1535",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "293",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10659",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "340",
+   "section": "01",
+   "title": "Mathematics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 30,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "371",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10665",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "235",
+   "section": "01",
+   "title": "Foundations of Mathematics",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 30,
+   "enrollment": 18,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "248",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10672",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "340",
+   "section": "01",
+   "title": "Topics in Music",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 7,
+   "max_enrollment": 12,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1500",
+     "end_time": "1620",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "336",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10679",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "340",
+   "section": "02",
+   "title": "Topics in Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 12,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "281",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10681",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "120",
+   "section": "01",
+   "title": "Research Methods in Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 20,
+   "enrollment": 19,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1400",
+     "end_time": "1505",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "270",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10687",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "265",
+   "section": "01",
+   "title": "Intermediate Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 20,
+   "enrollment": 20,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1100",
+     "end_time": "1150",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "300",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10694",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "200",
+   "section": "01",
+   "title": "Research Methods in Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 30,
+   "enrollment": 22,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1400",
+     "end_time": "1505",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "321",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10695",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "235",
+   "section": "01",
+   "title": "Advanced Philosophy Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1100",
+     "end_time": "1220",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "325",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10697",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "310",
+   "section": "01",
+   "title": "Advanced Philosophy Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 12,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1430",
+     "end_time": "1520",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "195",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10698",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "310",
+   "section": "02",
+   "title": "Advanced Philosophy Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "160",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10702",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "200",
+   "section": "01",
+   "title": "Intermediate Philosophy",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1220",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "331",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10707",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "265",
+   "section": "01",
+   "title": "Foundations of Philosophy",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0800",
+     "end_time": "0850",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "304",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10709",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "265",
+   "section": "02",
+   "title": "Foundations of Philosophy",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 29,
+   "max_enrollment": 30,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0830",
+     "end_time": "0920",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "140",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10710",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "394",
+   "section": "01",
+   "title": "Advanced Philosophy Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 20,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1300",
+     "end_time": "1350",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "355",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10714",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "265",
+   "section": "01",
+   "title": "Physics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 12,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1000",
+     "end_time": "1050",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "386",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10720",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "265",
+   "section": "02",
+   "title": "Physics and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 16,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1030",
+     "end_time": "1150",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "228",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10721",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "200",
+   "section": "01",
+   "title": "Intermediate Physics",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 4,
+   "max_enrollment": 12,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "120",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10725",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "200",
+   "section": "01",
+   "title": "Physics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 30,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1530",
+     "end_time": "1620",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "254",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10731",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "100",
+   "section": "01",
+   "title": "Physics Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 21,
+   "max_enrollment": 24,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1400",
+     "end_time": "1505",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "225",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10736",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Foundations of Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 7,
+   "max_enrollment": 30,
+   "enrollment": 23,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "202",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10739",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "310",
+   "section": "02",
+   "title": "Foundations of Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 16,
+   "max_enrollment": 20,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1000",
+     "end_time": "1105",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "373",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10742",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Psychology Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 10,
+   "max_enrollment": 12,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1000",
+     "end_time": "1120",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "331",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10745",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "265",
+   "section": "01",
+   "title": "Research Methods in Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 4,
+   "max_enrollment": 12,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1300",
+     "end_time": "1350",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "285",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10752",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "265",
+   "section": "02",
+   "title": "Research Methods in Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 20,
+   "enrollment": 17,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1030",
+     "end_time": "1150",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "228",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10754",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "235",
+   "section": "01",
+   "title": "Topics in Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 20,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "137",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10755",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "200",
+   "section": "01",
+   "title": "Political Science: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 13,
+   "max_enrollment": 20,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1530",
+     "end_time": "1650",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "331",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10761",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "200",
+   "section": "02",
+   "title": "Political Science: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 12,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "363",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10766",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "01",
+   "title": "Intermediate Political Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1330",
+     "end_time": "1420",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "376",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10767",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "02",
+   "title": "Intermediate Political Science",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 13,
+   "max_enrollment": 30,
+   "enrollment": 17,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1430",
+     "end_time": "1550",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "331",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10772",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "265",
+   "section": "01",
+   "title": "Topics in Political Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 12,
+   "enrollment": 6,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1500",
+     "end_time": "1605",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "305",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10775",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "265",
+   "section": "02",
+   "title": "Topics in Political Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0800",
+     "end_time": "0905",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "298",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10778",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "01",
+   "title": "Intermediate Political Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 20,
+   "enrollment": 11,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0900",
+     "end_time": "0950",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "363",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10781",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "02",
+   "title": "Intermediate Political Science",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 16,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "166",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10782",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "200",
+   "section": "01",
+   "title": "Hispanic Studies and Society",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 16,
+   "max_enrollment": 16,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1100",
+     "end_time": "1205",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "373",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10788",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "340",
+   "section": "01",
+   "title": "Foundations of Hispanic Studies",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 12,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1430",
+     "end_time": "1550",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "124",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10789",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "235",
+   "section": "01",
+   "title": "Intermediate Hispanic Studies",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 12,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1430",
+     "end_time": "1535",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "203",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10791",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "235",
+   "section": "02",
+   "title": "Intermediate Hispanic Studies",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 30,
+   "enrollment": 29,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "104",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "10796",
+   "term": "202730",
+   "term_description": "Spring 2027",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "310",
+   "section": "01",
+   "title": "Advanced Hispanic Studies Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 30,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "166",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  }
+ ]
+}

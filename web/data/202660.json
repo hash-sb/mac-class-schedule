@@ -1,0 +1,2966 @@
+{
+ "code": "202660",
+ "description": "Summer 2026",
+ "courses": [
+  {
+   "crn": "11506",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "200",
+   "section": "01",
+   "title": "Foundations of Art",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 20,
+   "enrollment": 17,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1300",
+     "end_time": "1405",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "303",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11512",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "200",
+   "section": "02",
+   "title": "Foundations of Art",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 24,
+   "enrollment": 23,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1400",
+     "end_time": "1520",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "254",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11517",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "100",
+   "section": "01",
+   "title": "Advanced Art Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 20,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1220",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "232",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11523",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "100",
+   "section": "02",
+   "title": "Advanced Art Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 20,
+   "enrollment": 17,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1130",
+     "end_time": "1250",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "114",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11528",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "265",
+   "section": "01",
+   "title": "Topics in Art",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 30,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "347",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11532",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ART",
+   "subject_description": "Art and Art History",
+   "course_number": "120",
+   "section": "01",
+   "title": "Foundations of Art",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 12,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1030",
+     "end_time": "1135",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "382",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11533",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "235",
+   "section": "01",
+   "title": "Introduction to Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 24,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1300",
+     "end_time": "1350",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "273",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11540",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Foundations of Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 30,
+   "enrollment": 21,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1250",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "221",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11545",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "265",
+   "section": "01",
+   "title": "Biology Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 20,
+   "max_enrollment": 30,
+   "enrollment": 10,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1000",
+     "end_time": "1105",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "270",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11550",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "394",
+   "section": "01",
+   "title": "Foundations of Biology",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 7,
+   "max_enrollment": 12,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "190",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11557",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "BIOL",
+   "subject_description": "Biology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Topics in Biology",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 12,
+   "enrollment": 12,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1030",
+     "end_time": "1135",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "237",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11563",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "310",
+   "section": "01",
+   "title": "Topics in Chemistry",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 2,
+   "max_enrollment": 16,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1330",
+     "end_time": "1435",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "391",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11567",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "310",
+   "section": "02",
+   "title": "Topics in Chemistry",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 30,
+   "enrollment": 30,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "274",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11571",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "120",
+   "section": "01",
+   "title": "Foundations of Chemistry",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 20,
+   "enrollment": 20,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1530",
+     "end_time": "1635",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "118",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11572",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "340",
+   "section": "01",
+   "title": "Topics in Chemistry",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 16,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1330",
+     "end_time": "1450",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "216",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11579",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "CHEM",
+   "subject_description": "Chemistry",
+   "course_number": "120",
+   "section": "01",
+   "title": "Advanced Chemistry Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 29,
+   "max_enrollment": 30,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0800",
+     "end_time": "0905",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "357",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11580",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "235",
+   "section": "01",
+   "title": "Introduction to Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 30,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1000",
+     "end_time": "1105",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "162",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11585",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "235",
+   "section": "02",
+   "title": "Introduction to Computer Science",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0930",
+     "end_time": "1020",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "227",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11586",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "265",
+   "section": "01",
+   "title": "Computer Science: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 16,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "116",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11593",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "265",
+   "section": "02",
+   "title": "Computer Science: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 16,
+   "enrollment": 10,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1330",
+     "end_time": "1435",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "255",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11596",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "310",
+   "section": "01",
+   "title": "Advanced Computer Science Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 24,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0900",
+     "end_time": "1020",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "335",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11597",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "340",
+   "section": "01",
+   "title": "Introduction to Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 10,
+   "max_enrollment": 24,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1530",
+     "end_time": "1635",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "136",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11604",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "340",
+   "section": "02",
+   "title": "Introduction to Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 20,
+   "enrollment": 11,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1100",
+     "end_time": "1150",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "163",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11609",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "COMP",
+   "subject_description": "Computer Science",
+   "course_number": "340",
+   "section": "01",
+   "title": "Intermediate Computer Science",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1500",
+     "end_time": "1605",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "292",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11610",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "100",
+   "section": "01",
+   "title": "Foundations of Economics",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 18,
+   "max_enrollment": 20,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1530",
+     "end_time": "1650",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "383",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11617",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "100",
+   "section": "01",
+   "title": "Economics: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1500",
+     "end_time": "1550",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "303",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11618",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "310",
+   "section": "01",
+   "title": "Economics: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 16,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0930",
+     "end_time": "1050",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "176",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11620",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "310",
+   "section": "02",
+   "title": "Economics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 30,
+   "enrollment": 30,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1430",
+     "end_time": "1550",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "201",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11622",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ECON",
+   "subject_description": "Economics",
+   "course_number": "200",
+   "section": "01",
+   "title": "Economics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 30,
+   "enrollment": 18,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1430",
+     "end_time": "1550",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "237",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11627",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "340",
+   "section": "01",
+   "title": "English and Society",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 2,
+   "max_enrollment": 24,
+   "enrollment": 22,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1030",
+     "end_time": "1120",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "346",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11631",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "120",
+   "section": "01",
+   "title": "English Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 13,
+   "max_enrollment": 20,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1400",
+     "end_time": "1450",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "118",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11634",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "265",
+   "section": "01",
+   "title": "Topics in English",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 12,
+   "enrollment": 4,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "0800",
+     "end_time": "0850",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "397",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11637",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "310",
+   "section": "01",
+   "title": "Introduction to English",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 16,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1220",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "240",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11641",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "120",
+   "section": "01",
+   "title": "English Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "E. Chen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0830",
+     "end_time": "0950",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "389",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11642",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "ENGL",
+   "subject_description": "English",
+   "course_number": "120",
+   "section": "01",
+   "title": "Research Methods in English",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 16,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1400",
+     "end_time": "1520",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "386",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11648",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "310",
+   "section": "01",
+   "title": "History Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 12,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1220",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "151",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11649",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "265",
+   "section": "01",
+   "title": "Advanced History Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 19,
+   "max_enrollment": 30,
+   "enrollment": 11,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1130",
+     "end_time": "1220",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "280",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11653",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "265",
+   "section": "02",
+   "title": "Advanced History Seminar",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 12,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1000",
+     "end_time": "1120",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "390",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11658",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "340",
+   "section": "01",
+   "title": "History Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 14,
+   "max_enrollment": 30,
+   "enrollment": 16,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1530",
+     "end_time": "1620",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "289",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11662",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "265",
+   "section": "01",
+   "title": "Introduction to History",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 24,
+   "enrollment": 16,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1330",
+     "end_time": "1450",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "197",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11668",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "HIST",
+   "subject_description": "History",
+   "course_number": "265",
+   "section": "02",
+   "title": "Introduction to History",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 16,
+   "enrollment": 16,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "K. Whitfield",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1500",
+     "end_time": "1605",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "371",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11669",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "100",
+   "section": "01",
+   "title": "Mathematics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 22,
+   "max_enrollment": 24,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1400",
+     "end_time": "1450",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "219",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11674",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "100",
+   "section": "02",
+   "title": "Mathematics: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 10,
+   "max_enrollment": 20,
+   "enrollment": 10,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1300",
+     "end_time": "1405",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "140",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11681",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "310",
+   "section": "01",
+   "title": "Mathematics and Society",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 20,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1400",
+     "end_time": "1505",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "182",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11687",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "340",
+   "section": "01",
+   "title": "Research Methods in Mathematics",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 24,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1530",
+     "end_time": "1620",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "324",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11689",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "340",
+   "section": "02",
+   "title": "Research Methods in Mathematics",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 6,
+   "max_enrollment": 20,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1430",
+     "end_time": "1535",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "101",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11691",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MATH",
+   "subject_description": "Mathematics, Statistics, and Computer Science",
+   "course_number": "235",
+   "section": "01",
+   "title": "Advanced Mathematics Seminar",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 10,
+   "max_enrollment": 12,
+   "enrollment": 2,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0900",
+     "end_time": "0950",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "171",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11693",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "200",
+   "section": "01",
+   "title": "Research Methods in Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 23,
+   "max_enrollment": 24,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "L. Tanaka",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "120",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11697",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "200",
+   "section": "02",
+   "title": "Research Methods in Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 24,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0900",
+     "end_time": "0950",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "277",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11700",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "120",
+   "section": "01",
+   "title": "Introduction to Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 20,
+   "max_enrollment": 20,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1100",
+     "end_time": "1220",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "129",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11701",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "MUSI",
+   "subject_description": "Music",
+   "course_number": "340",
+   "section": "01",
+   "title": "Intermediate Music",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 12,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "0800",
+     "end_time": "0920",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "344",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11705",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "394",
+   "section": "01",
+   "title": "Foundations of Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 20,
+   "enrollment": 5,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1430",
+     "end_time": "1520",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "374",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11712",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "340",
+   "section": "01",
+   "title": "Topics in Philosophy",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 17,
+   "max_enrollment": 24,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0930",
+     "end_time": "1035",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "186",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11717",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "340",
+   "section": "02",
+   "title": "Topics in Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 16,
+   "max_enrollment": 16,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1100",
+     "end_time": "1150",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "221",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11721",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "100",
+   "section": "01",
+   "title": "Introduction to Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 21,
+   "max_enrollment": 24,
+   "enrollment": 3,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "F. Osei",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0800",
+     "end_time": "0850",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "141",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11728",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "100",
+   "section": "02",
+   "title": "Introduction to Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 16,
+   "max_enrollment": 16,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1400",
+     "end_time": "1450",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "212",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11735",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "340",
+   "section": "01",
+   "title": "Philosophy: A Global Perspective",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 12,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "1100",
+     "end_time": "1220",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "230",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11739",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "120",
+   "section": "01",
+   "title": "Intermediate Philosophy",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 8,
+   "max_enrollment": 20,
+   "enrollment": 12,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0830",
+     "end_time": "0950",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "327",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11746",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHIL",
+   "subject_description": "Philosophy",
+   "course_number": "120",
+   "section": "02",
+   "title": "Intermediate Philosophy",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 0,
+   "max_enrollment": 20,
+   "enrollment": 20,
+   "waitlist_available": 5,
+   "waitlist_capacity": 5,
+   "open_section": false,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0800",
+     "end_time": "0905",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "348",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11751",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "310",
+   "section": "01",
+   "title": "Physics Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 13,
+   "max_enrollment": 20,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0930",
+     "end_time": "1020",
+     "building": "KAG",
+     "building_description": "Kagin Commons",
+     "room": "211",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11757",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "310",
+   "section": "01",
+   "title": "Topics in Physics",
+   "credit_hours": 0.5,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 3,
+   "max_enrollment": 16,
+   "enrollment": 13,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "249",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11758",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PHYS",
+   "subject_description": "Physics and Astronomy",
+   "course_number": "100",
+   "section": "01",
+   "title": "Topics in Physics",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 23,
+   "max_enrollment": 24,
+   "enrollment": 1,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1300",
+     "end_time": "1420",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "321",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11764",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "310",
+   "section": "01",
+   "title": "Research Methods in Psychology",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 10,
+   "max_enrollment": 24,
+   "enrollment": 14,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TR",
+     "start_time": "0830",
+     "end_time": "0935",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "245",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11768",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "340",
+   "section": "01",
+   "title": "Foundations of Psychology",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 11,
+   "max_enrollment": 20,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "A. Nguyen",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1100",
+     "end_time": "1205",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "252",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11769",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "PSYC",
+   "subject_description": "Psychology",
+   "course_number": "235",
+   "section": "01",
+   "title": "Psychology: A Global Perspective",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 12,
+   "max_enrollment": 12,
+   "enrollment": 0,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "D. Ramirez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "TWR",
+     "start_time": "0900",
+     "end_time": "0950",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "382",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11770",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "01",
+   "title": "Topics in Political Science",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 5,
+   "max_enrollment": 30,
+   "enrollment": 25,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "B. Okafor",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1000",
+     "end_time": "1120",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "226",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11773",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "394",
+   "section": "01",
+   "title": "Political Science Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 16,
+   "enrollment": 7,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1100",
+     "end_time": "1220",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "243",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11774",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "POLI",
+   "subject_description": "Political Science",
+   "course_number": "100",
+   "section": "01",
+   "title": "Topics in Political Science",
+   "credit_hours": 0.5,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 9,
+   "max_enrollment": 30,
+   "enrollment": 21,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1530",
+     "end_time": "1635",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "250",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11778",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "120",
+   "section": "01",
+   "title": "Topics in Hispanic Studies",
+   "credit_hours": 1.0,
+   "schedule_type": "Laboratory",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 15,
+   "max_enrollment": 24,
+   "enrollment": 9,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1130",
+     "end_time": "1235",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "367",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11785",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "100",
+   "section": "01",
+   "title": "Hispanic Studies Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Studio",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 2,
+   "max_enrollment": 20,
+   "enrollment": 18,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "J. Alvarez",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "M",
+     "start_time": "1330",
+     "end_time": "1420",
+     "building": "HUM",
+     "building_description": "Humanities",
+     "room": "243",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11792",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "100",
+   "section": "02",
+   "title": "Hispanic Studies Laboratory",
+   "credit_hours": 0.5,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 4,
+   "max_enrollment": 12,
+   "enrollment": 8,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "H. Ibrahim",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1100",
+     "end_time": "1205",
+     "building": "CARN",
+     "building_description": "Carnegie Hall",
+     "room": "277",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11795",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "200",
+   "section": "01",
+   "title": "Hispanic Studies Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 20,
+   "enrollment": 19,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "G. Petrov",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "0900",
+     "end_time": "1005",
+     "building": "OLRI",
+     "building_description": "Olin-Rice",
+     "room": "313",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11798",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "200",
+   "section": "02",
+   "title": "Hispanic Studies Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Lecture",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 12,
+   "enrollment": 11,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "I. Kowalski",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MWF",
+     "start_time": "1100",
+     "end_time": "1150",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "244",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  },
+  {
+   "crn": "11802",
+   "term": "202660",
+   "term_description": "Summer 2026",
+   "subject": "SPAN",
+   "subject_description": "Hispanic Studies",
+   "course_number": "120",
+   "section": "01",
+   "title": "Hispanic Studies Laboratory",
+   "credit_hours": 1.0,
+   "schedule_type": "Seminar",
+   "campus": "Main Campus",
+   "instructional_method": "In Person",
+   "part_of_term": "Full Term",
+   "seats_available": 1,
+   "max_enrollment": 16,
+   "enrollment": 15,
+   "waitlist_available": 0,
+   "waitlist_capacity": 5,
+   "open_section": true,
+   "faculty": [
+    {
+     "name": "C. Larsson",
+     "email": null,
+     "primary": true
+    }
+   ],
+   "meetings": [
+    {
+     "days": "MW",
+     "start_time": "1000",
+     "end_time": "1050",
+     "building": "MARK",
+     "building_description": "Markim Hall",
+     "room": "339",
+     "campus": "Main Campus",
+     "meeting_type": "Class"
+    }
+   ]
+  }
+ ]
+}

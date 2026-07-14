@@ -1,0 +1,40 @@
+{
+ "current_term_code": "202660",
+ "terms": [
+  {
+   "code": "202730",
+   "description": "Spring 2027",
+   "scraped": true
+  },
+  {
+   "code": "202710",
+   "description": "Fall 2026",
+   "scraped": true
+  },
+  {
+   "code": "202660",
+   "description": "Summer 2026",
+   "scraped": true
+  },
+  {
+   "code": "202630",
+   "description": "Spring 2026",
+   "scraped": true
+  },
+  {
+   "code": "202510",
+   "description": "Fall 2025",
+   "scraped": true
+  },
+  {
+   "code": "202430",
+   "description": "Spring 2025",
+   "scraped": true
+  },
+  {
+   "code": "202410",
+   "description": "Fall 2024",
+   "scraped": true
+  }
+ ]
+}
