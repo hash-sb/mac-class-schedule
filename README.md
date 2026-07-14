@@ -142,6 +142,38 @@ This dumps the raw JSON Banner returns to `web/data/_debug_<term>.json` so
 you can see the actual field names and adjust `parse_section()` in
 `scraper.py` accordingly.
 
+## Verifying against the actual Class Schedule page
+
+If numbers ever look wrong compared to what you see on
+`https://www.macalester.edu/registrar/schedules/` (which links to pages
+like `macadmsys.macalester.edu/.../classSchedule?term=202710`), that's a
+**different Banner front-end/host** than the search API `scraper.py` uses
+(`oci-macxe.macalester.edu`) -- possibly a different environment/instance
+with different freshness. `scrape_classschedule.py` renders that exact
+page with a real headless browser (it's JavaScript-only, so plain
+requests can't see its data) and reads the numbers out of the DOM instead.
+
+This one is unverified against the live site (my sandbox can't reach
+macalester.edu to test it) -- run it with `--debug` first and check the
+output before trusting it:
+
+```bash
+pip install -r requirements.txt
+playwright install --with-deps chromium   # one-time, downloads the browser
+
+python scrape_classschedule.py --term 202710 --debug
+```
+
+It prints how many course-like rows it found. If that number looks right,
+you're good. If it's 0 or clearly wrong, open the saved
+`web/data/_debug_classschedule_202710.png` (screenshot),
+`.html` (rendered markup), and `.txt` (visible text) files it always
+writes in debug mode, and share what the actual row markup looks like --
+I built the parser defensively (real `<table>` first, falls back to
+scanning visible text) specifically because I couldn't see this page's
+real structure, so it likely needs one round of fixing against real output
+before it's reliable enough to wire into the scheduled workflow.
+
 ## Demo data
 
 `generate_sample_data.py` fills `web/data/` with realistic-but-fake course

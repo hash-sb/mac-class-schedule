@@ -96,7 +96,7 @@ def fetch_windows(debug=False):
 
     if debug:
         os.makedirs(DATA_DIR, exist_ok=True)
-        with open(os.path.join(DATA_DIR, "_debug_academic_calendar.html"), "w") as f:
+        with open(os.path.join(DATA_DIR, "_debug_academic_calendar.html"), "w", encoding="utf-8") as f:
             f.write(r.text)
 
     soup = BeautifulSoup(r.text, "html.parser")
@@ -186,7 +186,7 @@ def main():
 
     gh_out = os.environ.get("GITHUB_OUTPUT")
     if gh_out:
-        with open(gh_out, "a") as f:
+        with open(gh_out, "a", encoding="utf-8") as f:
             f.write(f"run_full={'true' if run_full else 'false'}\n")
             f.write(f"in_window={'true' if in_window else 'false'}\n")
 

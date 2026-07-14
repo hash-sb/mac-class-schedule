@@ -147,7 +147,7 @@ def main():
     for i, t in enumerate(terms):
         courses = make_term_courses(t["code"], t["description"], seed=i + 1)
         path = os.path.join(DATA_DIR, f"{t['code']}.json")
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             json.dump(
                 {"code": t["code"], "description": t["description"], "scraped_at": now, "courses": courses}, f, indent=1
             )
@@ -159,7 +159,7 @@ def main():
         "generated_at": now,
         "terms": [{"code": t["code"], "description": t["description"], "scraped": True} for t in terms],
     }
-    with open(os.path.join(DATA_DIR, "terms.json"), "w") as f:
+    with open(os.path.join(DATA_DIR, "terms.json"), "w", encoding="utf-8") as f:
         json.dump(terms_index, f, indent=1)
     print(f"wrote terms.json (current: {current['description'] if current else 'none'})")
 

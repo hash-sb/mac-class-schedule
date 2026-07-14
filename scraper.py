@@ -363,7 +363,7 @@ def save_term(term_code, description, sections):
     os.makedirs(DATA_DIR, exist_ok=True)
     path = os.path.join(DATA_DIR, f"{term_code}.json")
     scraped_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(
             {"code": term_code, "description": description, "scraped_at": scraped_at, "courses": sections},
             f,
@@ -384,7 +384,7 @@ def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
     path = os.path.join(DATA_DIR, "terms.json")
     existing = {}
     if os.path.exists(path):
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             existing = {t["code"]: t for t in json.load(f).get("terms", [])}
 
     for t in all_known_terms:
@@ -408,7 +408,7 @@ def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
     candidates = [t for t in merged if t.get("scraped")]
     current = guess_current_term(candidates) or guess_current_term(merged)
 
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(
             {
                 "current_term_code": current["code"] if current else None,
@@ -459,7 +459,7 @@ def main():
             data={"txt_term": term_code, "pageOffset": 0, "pageMaxSize": 5},
             timeout=30,
         )
-        with open(os.path.join(DATA_DIR, f"_debug_{term_code}.json"), "w") as f:
+        with open(os.path.join(DATA_DIR, f"_debug_{term_code}.json"), "w", encoding="utf-8") as f:
             f.write(r.text)
         print(f"Wrote raw debug response for term {term_code} to web/data/_debug_{term_code}.json")
 
@@ -473,7 +473,7 @@ def main():
         if first_crn:
             info = fetch_live_enrollment(session, term_code, first_crn)
             debug_path = os.path.join(DATA_DIR, f"_debug_enrollment_{term_code}_{first_crn}.json")
-            with open(debug_path, "w") as f:
+            with open(debug_path, "w", encoding="utf-8") as f:
                 json.dump(info, f, indent=1)
             print(f"Wrote live-enrollment probe for CRN {first_crn} to web/data/_debug_enrollment_{term_code}_{first_crn}.json"
                   f" ({'got data' if info else 'endpoint returned nothing usable'})")
