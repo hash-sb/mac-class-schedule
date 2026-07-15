@@ -141,7 +141,7 @@ function clauseMatchesCourse(clause, haystackLower, c, regexMode) {
 function courseMatches(c, f) {
   if (f.qClauses.length) {
     const haystack = [
-      c.subject, c.subject_description, c.course_number, c.title, c.crn,
+      c.subject, c.course_number, c.title, c.subject_description, c.crn,
       ...(c.faculty || []).map((x) => x.name || ""),
     ].filter(Boolean).join(" ").toLowerCase();
 
