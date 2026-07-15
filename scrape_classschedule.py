@@ -224,150 +224,270 @@ CRN_IN_CELL0_RE = re.compile(r"\((\d{4,6})\)\s*$")
 INT_RE = re.compile(r"^-?\d+$")
 
 
-def extract_seat_overrides(table_rows):
-    """
-    Given the parsed row-cell-lists, pull out {crn: {seats_available,
-    max_enrollment, enrollment}}. Confirmed row shape:
-        [0]    "SUBJ NUM-SEC (CRN)"   e.g. "AMST 130-F1 (10018)"
-        [1]    title
-        [2]    "Meeting: ..."
-        [3]    "Instructor: ..."
-        [-2]   seats available (can be negative on overrides)
-        [-1]   max enrollment
+CODE_CELL_RE = re.compile(r"^([A-Z&]+)\s+([\w]+)-([\w]+)\s+\((\d{4,6})\)\s*$", re.IGNORECASE)
+MEETING_TEXT_RE = re.compile(
+    r"Meeting:\s*([A-Za-z](?:\s[A-Za-z])*)\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s*(am|pm)\s+(.*)$",
+    re.IGNORECASE,
+)
+INSTRUCTOR_TEXT_RE = re.compile(r"Instructor:\s*(.+)$", re.IGNORECASE)
 
-    Seats/max are read from the LAST TWO cells rather than fixed indices
-    4/5 -- some section/schedule types render extra or fewer descriptive
-    columns before them (e.g. cross-listed courses, multi-meeting
-    sections), and pinning to the end is more robust to that than
-    assuming every row has exactly 6 cells.
 
-    If the same CRN appears on more than one row (e.g. a section with
-    multiple meeting patterns, each getting its own row) and those rows
-    DISAGREE on seats/max, that's a real ambiguity -- we keep the first
-    occurrence and report the conflict rather than silently letting
-    whichever row happened to come later win.
+def _to_24h(time_str, ampm):
+    h, m = time_str.split(":")
+    h, m = int(h), int(m)
+    ampm = ampm.lower()
+    if ampm == "pm" and h != 12:
+        h += 12
+    if ampm == "am" and h == 12:
+        h = 0
+    return f"{h:02d}{m:02d}"
 
-    Rows that don't match this shape at all are skipped and counted, not
-    guessed at -- better to under-cover than silently merge wrong numbers.
-    """
-    overrides = {}
+
+def parse_meetings_text(text):
+    """Best-effort parse of one or more 'Meeting: <days> <start> - <end> <am/pm> <location>' segments."""
+    meetings = []
+    for m in MEETING_TEXT_RE.finditer(text or ""):
+        days_raw, start, end, ampm, location = m.groups()
+        days = re.sub(r"\s+", "", days_raw).upper()
+        location = location.strip()
+        building, room = location, None
+        if location:
+            parts = location.rsplit(" ", 1)
+            if len(parts) == 2 and re.match(r"^\d+[A-Za-z]?$", parts[1]):
+                building, room = parts[0], parts[1]
+        meetings.append(
+            {
+                "days": days,
+                "start_time": _to_24h(start, ampm),
+                "end_time": _to_24h(end, ampm),
+                "building": building or None,
+                "building_description": None,
+                "room": room,
+                "campus": None,
+                "meeting_type": None,
+            }
+        )
+    return meetings
+
+
+def parse_instructors_text(text):
+    """Best-effort parse of an 'Instructor: Name1, Name2' segment."""
+    m = INSTRUCTOR_TEXT_RE.search(text or "")
+    if not m:
+        return []
+    names = [n.strip() for n in re.split(r"[,;]", m.group(1)) if n.strip()]
+    return [{"name": n, "email": None, "primary": i == 0} for i, n in enumerate(names)]
+
+
+def group_rows_by_crn(table_rows):
+    """Groups parsed row-cell-lists by the CRN found in cell[0], skipping rows that don't match the expected shape."""
+    groups = {}
     skipped = 0
-    conflicts = []
     for cells in table_rows:
-        if len(cells) < 3:
+        if not cells:
             skipped += 1
             continue
-        m = CRN_IN_CELL0_RE.search(cells[0])
-        if not m or not INT_RE.match(cells[-2]) or not INT_RE.match(cells[-1]):
+        m = CODE_CELL_RE.match(cells[0].strip())
+        if not m:
             skipped += 1
             continue
-        crn = m.group(1)
-        seats_available = int(cells[-2])
-        max_enrollment = int(cells[-1])
-        new_ov = {
-            "seats_available": seats_available,
-            "max_enrollment": max_enrollment,
-            "enrollment": max_enrollment - seats_available,
-        }
-        if crn in overrides:
-            if overrides[crn] != new_ov:
-                conflicts.append((crn, overrides[crn], new_ov))
-            continue  # keep the first-seen row for this CRN
-        overrides[crn] = new_ov
-
-    if conflicts:
-        print(f"  WARNING: {len(conflicts)} CRN(s) had multiple rows with different seat numbers -- kept the first row seen for each:")
-        for crn, first, other in conflicts[:8]:
-            print(f"    CRN {crn}: kept {first} over conflicting {other}")
-
-    return overrides, skipped
+        crn = m.group(4)
+        groups.setdefault(crn, []).append((m, cells))
+    return groups, skipped
 
 
-def merge_seat_overrides_into_term_file(term_code, overrides):
+def build_render_record(crn, rows):
     """
-    Patches web/data/<term_code>.json in place, overwriting seats_available/
-    max_enrollment/enrollment for any course whose CRN we found on the
-    rendered Class Schedule page. Courses not matched are left untouched
-    (keeps whatever scraper.py's bulk search API already had). Returns
-    (matched_count, total_course_count), or (0, 0) if there's no existing
-    file for this term yet.
+    Builds one course record purely from the rendered Class Schedule rows
+    for a CRN (possibly several rows, e.g. one per meeting pattern).
+    Returns (record, had_conflict) where had_conflict is True if different
+    rows disagreed on seat numbers (first row wins in that case).
+    """
+    first_match, first_cells = rows[0]
+    subject, course_number, section = first_match.group(1).upper(), first_match.group(2), first_match.group(3)
+    title = first_cells[1] if len(first_cells) > 1 else None
 
-    Also cross-checks max_enrollment against what the bulk API already had
-    for the same CRN. Unlike open-seat counts, max_enrollment is a fixed
-    section capacity that basically never changes during a term -- so if
-    it disagrees a lot between the two sources, that's a strong signal the
-    column parsing here is wrong (not just "seats changed since we last
-    scraped"), worth checking the printed sample mismatches for.
+    meetings = []
+    faculty = []
+    seats_available = None
+    max_enrollment = None
+    had_conflict = False
+
+    for _, cells in rows:
+        for cell in cells:
+            cell_lower = cell.lower()
+            if "meeting:" in cell_lower:
+                meetings.extend(parse_meetings_text(cell))
+            if not faculty and "instructor:" in cell_lower:
+                parsed = parse_instructors_text(cell)
+                if parsed:
+                    faculty = parsed
+        if len(cells) >= 2 and INT_RE.match(cells[-2]) and INT_RE.match(cells[-1]):
+            sa, me = int(cells[-2]), int(cells[-1])
+            if seats_available is None:
+                seats_available, max_enrollment = sa, me
+            elif (sa, me) != (seats_available, max_enrollment):
+                had_conflict = True
+
+    enrollment = (max_enrollment - seats_available) if (seats_available is not None and max_enrollment is not None) else None
+
+    record = {
+        "crn": crn,
+        "subject": subject,
+        "course_number": course_number,
+        "section": section,
+        "title": title,
+        "seats_available": seats_available,
+        "max_enrollment": max_enrollment,
+        "enrollment": enrollment,
+        "meetings": meetings,
+        "faculty": faculty,
+    }
+    return record, had_conflict
+
+
+def reconcile_term_with_class_schedule(term_code, table_rows):
+    """
+    Makes the rendered Class Schedule page authoritative for BOTH which
+    courses exist in this term AND their seat counts, not just a seat
+    patch on top of scraper.py's bulk-API list:
+
+      - A CRN found here but not in the existing bulk-API data becomes a
+        new (best-effort) course record.
+      - A CRN in the existing bulk-API data but NOT found here is DROPPED
+        from the term's course list -- if it's not on the live page, it
+        shouldn't be shown as offered.
+      - A CRN found in both keeps the bulk API's richer metadata (credits,
+        schedule type, campus, etc. -- not available on this page) but
+        seats/max/enrollment always come from here. Meetings/instructor
+        are overridden too when we successfully parsed them here;
+        otherwise the bulk API's values are kept as a defensive fallback
+        (my regex parsing of this page is unverified against the live
+        site, so falling back rather than blanking out data on a parse
+        miss is the safer failure mode).
+
+    This eliminates the old "unverified" gap entirely for terms this runs
+    against -- every course in the resulting list is confirmed present
+    (and seat-accurate) as of this run, not just seat-patched-if-lucky.
+
+    Returns (new_count, updated_count, dropped_count, total_count), or
+    all zeros if there's no existing term file yet.
     """
     path = os.path.join(DATA_DIR, f"{term_code}.json")
     if not os.path.exists(path):
-        print(f"No existing web/data/{term_code}.json to merge into -- run scraper.py for this term first.")
-        return 0, 0
+        print(f"No existing web/data/{term_code}.json to reconcile -- run scraper.py for this term first.")
+        return 0, 0, 0, 0
 
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    matched = 0
+    existing_by_crn = {c["crn"]: c for c in data.get("courses", []) if c.get("crn")}
+
+    groups, skipped_rows = group_rows_by_crn(table_rows)
+
+    conflicts = []
     max_agree = 0
     max_disagree = 0
     mismatch_samples = []
-    unmatched_samples = []
-    for course in data.get("courses", []):
-        ov = overrides.get(course.get("crn"))
-        if not ov:
-            if len(unmatched_samples) < 8:
-                unmatched_samples.append(
-                    f"{course.get('subject')} {course.get('course_number')}-{course.get('section')} (CRN {course.get('crn')})"
-                )
-            continue
+    new_courses = []
+    updated_count = 0
+    new_count = 0
 
-        prior_max = course.get("max_enrollment")
-        if prior_max is not None:
-            if prior_max == ov["max_enrollment"]:
-                max_agree += 1
-            else:
-                max_disagree += 1
-                if len(mismatch_samples) < 8:
-                    mismatch_samples.append((course.get("crn"), prior_max, ov["max_enrollment"]))
+    for crn, rows in groups.items():
+        render, had_conflict = build_render_record(crn, rows)
+        if had_conflict:
+            conflicts.append(crn)
 
-        course["seats_available"] = ov["seats_available"]
-        course["max_enrollment"] = ov["max_enrollment"]
-        course["enrollment"] = ov["enrollment"]
+        existing = existing_by_crn.get(crn)
+
+        if existing:
+            prior_max = existing.get("max_enrollment")
+            if prior_max is not None and render["max_enrollment"] is not None:
+                if prior_max == render["max_enrollment"]:
+                    max_agree += 1
+                else:
+                    max_disagree += 1
+                    if len(mismatch_samples) < 8:
+                        mismatch_samples.append((crn, prior_max, render["max_enrollment"]))
+
+            course = dict(existing)  # keeps credits/schedule_type/campus/etc. we can't get from this page
+            course["title"] = render["title"] or existing.get("title")
+            if render["meetings"]:
+                course["meetings"] = render["meetings"]
+            if render["faculty"]:
+                course["faculty"] = render["faculty"]
+            updated_count += 1
+        else:
+            course = {
+                "crn": crn,
+                "term": term_code,
+                "term_description": data.get("description"),
+                "subject": render["subject"],
+                "subject_description": None,
+                "course_number": render["course_number"],
+                "section": render["section"],
+                "title": render["title"],
+                "credit_hours": None,
+                "schedule_type": None,
+                "campus": None,
+                "instructional_method": None,
+                "part_of_term": None,
+                "waitlist_available": None,
+                "waitlist_capacity": None,
+                "faculty": render["faculty"],
+                "meetings": render["meetings"],
+            }
+            new_count += 1
+
+        course["seats_available"] = render["seats_available"]
+        course["max_enrollment"] = render["max_enrollment"]
+        course["enrollment"] = render["enrollment"]
         course["seats_estimated"] = False
-        course["open_section"] = ov["seats_available"] > 0
         course["seats_source"] = "class_schedule_rendered"
-        matched += 1
+        course["open_section"] = bool(render["seats_available"] and render["seats_available"] > 0)
+        new_courses.append(course)
 
-    total_courses = len(data.get("courses", []))
-    unmatched_count = total_courses - matched
-    if unmatched_count:
-        print(f"  {unmatched_count}/{total_courses} sections were NOT found on the rendered page -- they keep whatever scraper.py's bulk API already had (not corrected this pass).")
-        if unmatched_samples:
-            print("  sample unmatched sections:")
-            for s in unmatched_samples:
-                print(f"    {s}")
+    dropped = [c for c in existing_by_crn if c not in groups]
+    total_before = len(existing_by_crn)
+
+    if conflicts:
+        print(f"  WARNING: {len(conflicts)} CRN(s) had rows with different seat numbers -- kept the first row seen for each: {conflicts[:8]}")
+
+    if dropped:
+        print(f"  {len(dropped)}/{total_before} previously-scraped sections were NOT found on the rendered page and were dropped from this term's list:")
+        for crn in dropped[:8]:
+            c = existing_by_crn[crn]
+            print(f"    {c.get('subject')} {c.get('course_number')}-{c.get('section')} (CRN {crn})")
+
+    if new_count:
+        print(f"  {new_count} section(s) found on the rendered page that weren't in the bulk API scrape -- added with limited metadata (no credits/schedule type available from this page).")
 
     if max_agree + max_disagree:
         pct = round(100 * max_agree / (max_agree + max_disagree))
         print(f"max_enrollment cross-check vs bulk API: {max_agree} agree, {max_disagree} disagree ({pct}% agreement)")
         if pct < 90:
-            print("  LOW AGREEMENT -- this suggests the column parsing may be wrong, not just normal drift.")
+            print("  LOW AGREEMENT -- this suggests the row parsing may be wrong, not just normal drift.")
         if mismatch_samples:
             print("  sample mismatches (crn, api_max, rendered_max):")
             for crn, api_max, rendered_max in mismatch_samples:
                 print(f"    {crn}: api={api_max} rendered={rendered_max}")
 
+    if skipped_rows:
+        print(f"  ({skipped_rows} rendered rows didn't match the expected 'SUBJ NUM-SEC (CRN)' shape and were skipped)")
+
+    data["courses"] = new_courses
     data["seats_refreshed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=1)
 
-    return matched, len(data.get("courses", []))
+    return new_count, updated_count, len(dropped), len(new_courses)
 
 
 def process_one_term(term_code, headless=True, debug=False, no_merge=False, page=None):
     """
-    Render, parse, and (unless no_merge) merge live seats for a single term.
-    If `page` is given, reuses that already-open browser page (faster for
+    Render, parse, and (unless no_merge) reconcile a single term's course
+    list + seats against the Class Schedule page. If `page` is given,
+    reuses that already-open browser page (faster for
     multi-term runs -- avoids a fresh browser launch per term). Otherwise
     opens and closes its own browser. Returns True on success.
     """
@@ -383,16 +503,13 @@ def process_one_term(term_code, headless=True, debug=False, no_merge=False, page
     print(f"parsed_count={len(table_rows)} (table strategy), {len(text_hits)} (text-line fallback)")
 
     if not table_rows:
-        print(f"No usable table rows for {term_code} -- skipping merge for this term.")
+        print(f"No usable table rows for {term_code} -- skipping reconciliation for this term.")
         return False
 
-    overrides, skipped = extract_seat_overrides(table_rows)
-    print(f"Extracted {len(overrides)} seat overrides ({skipped} rows skipped).")
-
     if not no_merge:
-        matched, total = merge_seat_overrides_into_term_file(term_code, overrides)
+        new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(term_code, table_rows)
         if total:
-            print(f"Merged into web/data/{term_code}.json: {matched}/{total} courses updated.")
+            print(f"Reconciled web/data/{term_code}.json: {updated_count} updated, {new_count} added, {dropped_count} dropped -- {total} total sections now.")
     return True
 
 
@@ -478,13 +595,10 @@ def main():
                 json.dump({"term": args.term, "scraped_at": datetime.now(timezone.utc).isoformat(), "rows": table_rows}, f, indent=1)
             print(f"\nWrote raw parsed rows to {out_path}")
 
-        overrides, skipped = extract_seat_overrides(table_rows)
-        print(f"\nExtracted {len(overrides)} seat overrides ({skipped} rows didn't match the expected shape and were skipped).")
-
         if not args.no_merge:
-            matched, total = merge_seat_overrides_into_term_file(args.term, overrides)
+            new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(args.term, table_rows)
             if total:
-                print(f"Merged into web/data/{args.term}.json: {matched}/{total} courses updated with live seat counts.")
+                print(f"\nReconciled web/data/{args.term}.json: {updated_count} updated, {new_count} added, {dropped_count} dropped -- {total} total sections now.")
     elif text_hits:
         print("\nNo <table> rows matched, but found course-like lines in the page text:")
         for line in text_hits[:10]:

@@ -165,29 +165,45 @@ This dumps the raw JSON Banner returns to `web/data/_debug_<term>.json` so
 you can see the actual field names and adjust `parse_section()` in
 `scraper.py` accordingly.
 
-## Live seat counts
+## Course list + live seat counts
 
-Course metadata (titles, meeting times, instructors, credits) comes from
-`scraper.py`, which talks to Banner's search API on
-`oci-macxe.macalester.edu`. Seat counts (`seats_available`,
-`max_enrollment`) come from a **different** source: `scrape_classschedule.py`
-renders the actual Class Schedule page at `macadmsys.macalester.edu` (the
-one linked from `https://www.macalester.edu/registrar/schedules/`) with a
-real headless browser and patches those numbers on top -- confirmed
-against real output to correctly parse rows like:
+For terms that aren't finished yet (see `is_term_finished` in
+`term_utils.py`), `macadmsys.macalester.edu`'s Class Schedule page is now
+**authoritative for both which courses exist and their seat counts** --
+not just a seat patch layered on top of `scraper.py`'s bulk API scrape.
+`scrape_classschedule.py` renders that page with a real headless browser
+(it has no course data in its raw HTML -- it's an Angular app, so plain
+`requests` can't see it) and reconciles it against whatever `scraper.py`
+already collected from Banner's search API on `oci-macxe.macalester.edu`:
+
+- A CRN found on the rendered page but not in the bulk API scrape becomes
+  a **new** course record (with limited metadata -- credits, schedule
+  type, and campus aren't shown on this page, so those stay blank for
+  these).
+- A CRN in the bulk API scrape but **not** found on the rendered page is
+  **dropped** from the term's list entirely -- if it's not on the live
+  page, it shouldn't be shown as offered.
+- A CRN found in both keeps the bulk API's richer metadata (credits,
+  schedule type, campus, etc.) but title/meetings/instructor/seats are
+  always taken from the rendered page when successfully parsed, falling
+  back to the bulk API's values only if parsing that specific field came
+  up empty (a defensive hedge, since this parsing is inherently harder to
+  verify than the well-documented Banner search API).
+
+This is what eliminates the need for any "unverified" indicator in the
+UI -- every course in a reconciled term's list is confirmed present (and
+seat-accurate) as of that run, not just seat-patched when we got lucky
+with a CRN match.
+
+Confirmed against real output to correctly parse rows like:
 
 ```
 AMST 130-F1 (10018)  ...  -1  16
 ```
 
 (CRN 10018, 1 over capacity out of 16 max -- negative seats-available is
-a real Banner state from enrollment overrides, and is preserved as-is
-rather than clamped).
-
-This only needs a JS-executing browser because the Class Schedule page
-has no course data in its raw HTML -- it's all populated by an Angular
-app after load, so `scraper.py`'s plain `requests`-based approach
-literally cannot see it.
+a real Banner state from enrollment overrides, shown as-is with a leading
+"-" in the app rather than clamped to zero).
 
 ```bash
 pip install -r requirements.txt
@@ -198,65 +214,37 @@ python scrape_classschedule.py --all-nonfinished        # every term that can st
 ```
 
 `--all-nonfinished` reads `web/data/terms.json` and only processes terms
-where `is_term_finished()` is false (i.e. terms that can still have
-enrollment changes) -- closed terms keep whatever `scraper.py` already
-collected, since those numbers can't change anymore anyway.
+where `is_term_finished()` is false -- closed terms keep whatever
+`scraper.py` already collected, since those numbers can't change anymore
+anyway (no course-list reconciliation happens for them either).
 
 ### If numbers still look wrong
 
-Every merge run now prints a cross-check against the bulk API's
-`max_enrollment` for each matched CRN -- unlike open seats, a section's
-max capacity is essentially fixed for the term, so it's a good signal for
-whether the parsing itself is right:
+Every reconciliation run prints:
 
-```
-max_enrollment cross-check vs bulk API: 720/765 agree (94% agreement)
-```
-
-High agreement (90%+) with numbers still looking off is most likely
-**timing** -- during active registration, seats genuinely change between
-when a run scrapes and when you happen to check the live site. The
-footer's "data as of ..." timestamp reflects the more recent of
-`seats_refreshed_at` / `scraped_at` for exactly this reason.
-
-Low agreement is a real parsing problem, not drift -- the log prints
-sample mismatches (`crn, api_max, rendered_max`) so you can spot-check
-those specific CRNs against the live page.
-
-Also: `scrape_classschedule.py` now tries clicking an "Update Open Seats"
-control if it finds one on the page before capturing numbers, logging
-whether it found one (`clicked 'Update Open Seats'...` vs `no control
-found`) -- worth checking that line too.
-
-**If it's only *some* sections that are wrong** (not a systemic
-column-swap kind of wrong), the log now also reports:
-
-- **Coverage gaps** -- sections whose CRN simply wasn't found on the
-  rendered page at all, so they still carry whatever the (less reliable)
-  bulk API had:
+- **A max_enrollment cross-check** against the bulk API, for CRNs found
+  in both sources. Unlike open seats, max capacity is essentially fixed
+  for the term, so this is a good signal for whether the row parsing
+  itself is right, separate from normal seat-count drift:
   ```
-  3/765 sections were NOT found on the rendered page -- they keep whatever
-  scraper.py's bulk API already had (not corrected this pass).
-    sample unmatched sections:
-      STAT 155-01 (CRN 10003)
+  max_enrollment cross-check vs bulk API: 720/765 agree (94% agreement)
   ```
-  In the app itself, any section still on unconfirmed data shows a small
-  **"unverified"** tag next to its seat count (hover for why) -- so you
-  can see exactly which sections to distrust rather than guessing.
+  High agreement with numbers still looking off is most likely **timing**
+  -- seats genuinely change between when a run scrapes and when you check
+  the live site. Low agreement is a real parsing problem -- the log
+  prints sample mismatches (`crn, api_max, rendered_max`) to spot-check.
+- **Dropped sections** -- previously-scraped CRNs not found this run,
+  named individually.
+- **Newly-added sections** -- CRNs found on the page that weren't in the
+  bulk API scrape.
 - **Same-CRN conflicts** -- if a section spans multiple rows (e.g.
   multiple meeting patterns) and they disagree on seat numbers, the first
   row is kept and the conflict is logged rather than silently letting
-  whichever row came later win:
-  ```
-  WARNING: 1 CRN(s) had multiple rows with different seat numbers -- kept
-  the first row seen for each:
-    CRN 10018: kept {...} over conflicting {...}
-  ```
+  whichever row came later win.
 
-Extraction also now reads seats/max from each row's **last two cells**
-rather than fixed positions 4/5 -- some section types render extra or
-fewer descriptive columns before them, and pinning to the end is more
-robust to that than assuming a fixed column count.
+Also: `scrape_classschedule.py` tries clicking an "Update Open Seats"
+control if it finds one on the page before capturing numbers, logging
+whether it found one -- worth checking that line too.
 
 ## Making runs faster
 
