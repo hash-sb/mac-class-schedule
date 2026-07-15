@@ -200,9 +200,9 @@ def extract_seats_by_id(html):
             if not td["id"].startswith("SeatsAvailCRN"):
                 continue
             crn = td["id"][len("SeatsAvailCRN"):]
-            text = td.get_text(strip=True)
-            if INT_RE.match(text):
-                seats_by_crn[crn] = int(text)
+            value = parse_signed_int(td.get_text(strip=True))
+            if value is not None:
+                seats_by_crn[crn] = value
 
     return seats_by_crn
 
@@ -252,6 +252,44 @@ def parse_via_text(visible_text):
 
 CRN_IN_CELL0_RE = re.compile(r"\((\d{4,6})\)\s*$")
 INT_RE = re.compile(r"^-?\d+$")
+
+# Some rendering pipelines substitute a different character for a plain
+# ASCII hyphen-minus when showing negative numbers (typographic minus,
+# en/em dash, etc.) -- INT_RE alone would silently reject all of these,
+# which would specifically break over-capacity sections (negative seats)
+# while leaving normal positive counts looking fine. Covered here:
+#   U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN, U+2012 FIGURE DASH,
+#   U+2013 EN DASH, U+2014 EM DASH, U+2212 MINUS SIGN,
+#   U+FE63 SMALL HYPHEN-MINUS, U+FF0D FULLWIDTH HYPHEN-MINUS
+_MINUS_LOOKALIKES = "\u2010\u2011\u2012\u2013\u2014\u2212\ufe63\uff0d"
+_SIGNED_INT_CORE_RE = re.compile(r"^-?\d+$")
+
+
+def parse_signed_int(text):
+    """
+    Parses an integer from cell text defensively: normalizes any
+    non-ASCII minus/dash lookalike to a plain '-', and also recognizes
+    accounting-style parenthesized negatives like '(1)' meaning -1 (a
+    real convention some enrollment systems use for over-capacity
+    counts). Returns None if the text isn't recognizably an integer in
+    any of these forms -- callers should treat that as "couldn't parse
+    this," not as zero.
+    """
+    if text is None:
+        return None
+    t = text.strip()
+    if not t:
+        return None
+    for ch in _MINUS_LOOKALIKES:
+        t = t.replace(ch, "-")
+    negative_paren = False
+    if t.startswith("(") and t.endswith(")") and len(t) > 2:
+        negative_paren = True
+        t = t[1:-1].strip()
+    if not _SIGNED_INT_CORE_RE.match(t):
+        return None
+    value = int(t)
+    return -abs(value) if negative_paren else value
 
 
 CODE_CELL_RE = re.compile(r"^([A-Z&]+)\s+([\w]+)-([\w]+)\s+\((\d{4,6})\)\s*$", re.IGNORECASE)
@@ -336,13 +374,17 @@ def _find_seat_pair(cells):
     values instead of a safe "couldn't parse this row" outcome. Missing
     data (kept safe by the caller falling back to prior values) is a much
     better failure mode than wrong data. Returns None if the last two
-    cells aren't both integers, or if max_enrollment is outside a sane
-    range for a class size (catches grabbing the wrong number entirely).
+    cells aren't both parseable as integers (see parse_signed_int for the
+    non-ASCII-minus/parenthesized-negative handling), or if max_enrollment
+    is outside a sane range for a class size (catches grabbing the wrong
+    number entirely).
     """
-    if len(cells) >= 2 and INT_RE.match(cells[-2]) and INT_RE.match(cells[-1]):
-        seats, max_enroll = int(cells[-2]), int(cells[-1])
-        if 0 < max_enroll <= 999:
-            return seats, max_enroll
+    if len(cells) < 2:
+        return None
+    seats = parse_signed_int(cells[-2])
+    max_enroll = parse_signed_int(cells[-1])
+    if seats is not None and max_enroll is not None and 0 < max_enroll <= 999:
+        return seats, max_enroll
     return None
 
 

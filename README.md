@@ -226,6 +226,16 @@ AMST 130-F1 (10018)  ...  -1  16
 a real Banner state from enrollment overrides, shown as-is with a leading
 "-" in the app rather than clamped to zero).
 
+**Bug fixed:** negative seat counts specifically were breaking even after
+the ID-based lookup above, because the parsing only recognized a plain
+ASCII hyphen-minus (`-1`). Pages often render negative numbers with a
+different character for typographic reasons -- a true minus sign
+(U+2212), en/em dashes, or accounting-style parentheses (`(1)` meaning
+`-1`) -- and the old regex silently rejected all of those, so
+over-capacity sections specifically ended up missing or wrong while
+normal positive counts looked fine. `parse_signed_int()` now normalizes
+all of these before parsing (tested against every variant).
+
 ```bash
 pip install -r requirements.txt
 python -m playwright install chromium   # one-time, downloads the browser
