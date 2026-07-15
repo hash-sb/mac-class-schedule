@@ -202,6 +202,32 @@ where `is_term_finished()` is false (i.e. terms that can still have
 enrollment changes) -- closed terms keep whatever `scraper.py` already
 collected, since those numbers can't change anymore anyway.
 
+### If numbers still look wrong
+
+Every merge run now prints a cross-check against the bulk API's
+`max_enrollment` for each matched CRN -- unlike open seats, a section's
+max capacity is essentially fixed for the term, so it's a good signal for
+whether the parsing itself is right:
+
+```
+max_enrollment cross-check vs bulk API: 720/765 agree (94% agreement)
+```
+
+High agreement (90%+) with numbers still looking off is most likely
+**timing** -- during active registration, seats genuinely change between
+when a run scrapes and when you happen to check the live site. The
+footer's "data as of ..." timestamp reflects the more recent of
+`seats_refreshed_at` / `scraped_at` for exactly this reason.
+
+Low agreement is a real parsing problem, not drift -- the log prints
+sample mismatches (`crn, api_max, rendered_max`) so you can spot-check
+those specific CRNs against the live page.
+
+Also: `scrape_classschedule.py` now tries clicking an "Update Open Seats"
+control if it finds one on the page before capturing numbers, logging
+whether it found one (`clicked 'Update Open Seats'...` vs `no control
+found`) -- worth checking that line too.
+
 ## Making runs faster
 
 A "full" run (inside a registration window, or the daily baseline) has two
@@ -239,27 +265,35 @@ Further levers you can pull yourself, each a real speed/coverage trade-off:
 
 ## Demo data
 
-`generate_sample_data.py` fills `web/data/` with realistic-but-fake course
-listings across 7 terms, so you can see the whole app working immediately
-without waiting on a real scrape:
+Sample data is **not shipped** in this repo (it used to be, but a stale
+fake term code lingering in `terms.json` forever was a real bug -- see
+`update_terms_index()` in `scraper.py`). `web/data/` starts empty except
+for a README explaining why.
+
+If you want to preview the site locally before your first real scrape,
+`generate_sample_data.py` still works the same way:
 
 ```bash
 python generate_sample_data.py
 ```
 
-The real scraper will overwrite these files the next time it runs.
+Just make sure a real `scraper.py` run happens (or you delete these files
+yourself) before your first deploy, so fake data never gets committed.
 
 ## Search features
 
 - Free-text search across title, subject, course number, CRN, and instructor
-  -- supports real regular expressions (e.g. `^comp`), and `&` as an AND
-  operator to combine terms (e.g. `COMP 123 & Amin`)
+  -- plain substring matching by default, or check **Regex** next to the
+  search box to interpret it as a real regular expression (e.g. `^comp`);
+  `&` works as an AND operator either way (e.g. `COMP 123 & Amin`)
 - Filter by subject (multi-select), instructor, CRN, meeting days (exact
   patterns pulled from whatever's actually offered that semester, e.g.
   `MWF`, `TR`, `M`), meeting-time window, and seat status (any / open only
   / closed only)
-- Sort by subject/number, title, instructor, or open seats
-- View one semester or **all semesters at once**
+- Sort by subject/number, title, instructor, open seats, or term
+- Select **any combination of semesters** from the Term(s) picker --
+  one, several, or all -- the Term column and term-based sorting kick in
+  automatically whenever more than one is active
 - Defaults to whatever semester is current or coming up next, computed from
   today's date -- no hardcoded term codes to update every year
 

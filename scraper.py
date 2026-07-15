@@ -379,34 +379,36 @@ def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
         "actually has course data" apart from "Banner lists this term but
         it's an empty/not-yet-published shell" (common for placeholder
         Summer/January terms tagged "(View Only)").
+
+    Rebuilds the terms list fresh from all_known_terms every run (using
+    the previous terms.json only as a fallback for terms not touched this
+    run) rather than merging into the old list -- otherwise a term code
+    that Banner no longer reports (a stale/fake entry, e.g. from manually
+    seeded sample data) would linger in terms.json forever, since nothing
+    would ever remove it. Terms with no course data are dropped from the
+    output entirely (not just disabled) -- the picker should only ever
+    list semesters that actually have something to show.
     """
     section_counts = section_counts or {}
     path = os.path.join(DATA_DIR, "terms.json")
-    existing = {}
+    prior = {}
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:
-            existing = {t["code"]: t for t in json.load(f).get("terms", [])}
+            prior = {t["code"]: t for t in json.load(f).get("terms", [])}
 
+    rebuilt = {}
     for t in all_known_terms:
         code = t["code"]
         if code in section_counts:
             has_data = section_counts[code] > 0
-        elif code in scraped_codes:
-            has_data = existing.get(code, {}).get("scraped", False)
         else:
-            has_data = existing.get(code, {}).get("scraped", False)
-        existing[code] = {
-            "code": code,
-            "description": t["description"],
-            "scraped": has_data,
-        }
+            # Not touched this run -- carry forward whatever we knew before.
+            has_data = prior.get(code, {}).get("scraped", False)
+        rebuilt[code] = {"code": code, "description": t["description"], "scraped": has_data}
 
-    merged = sort_terms_chronologically(list(existing.values()))
-    # Only guess "current" among terms that actually have course data --
-    # otherwise an empty placeholder term (0 sections) can "win" just
-    # because its description parses as the nearest season/year.
-    candidates = [t for t in merged if t.get("scraped")]
-    current = guess_current_term(candidates) or guess_current_term(merged)
+    terms_with_data = [t for t in rebuilt.values() if t["scraped"]]
+    merged = sort_terms_chronologically(terms_with_data)
+    current = guess_current_term(merged)
 
     with open(path, "w", encoding="utf-8") as f:
         json.dump(
@@ -418,6 +420,20 @@ def update_terms_index(all_known_terms, scraped_codes, section_counts=None):
             f,
             indent=1,
         )
+
+    # Clean up orphaned per-term files -- anything on disk whose code
+    # didn't make the final cut (stale, pruned, or leftover sample data).
+    final_codes = {t["code"] for t in merged}
+    for fname in os.listdir(DATA_DIR):
+        if not fname.endswith(".json") or fname == "terms.json" or fname.startswith("_"):
+            continue
+        code = fname[:-5]
+        if code not in final_codes:
+            try:
+                os.remove(os.path.join(DATA_DIR, fname))
+                print(f"  removed stale/no-data term file {fname}")
+            except OSError:
+                pass
     print(f"  updated {path} (current/upcoming term: {current['description'] if current else 'unknown'})")
 
 

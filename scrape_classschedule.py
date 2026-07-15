@@ -266,6 +266,13 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
     (keeps whatever scraper.py's bulk search API already had). Returns
     (matched_count, total_course_count), or (0, 0) if there's no existing
     file for this term yet.
+
+    Also cross-checks max_enrollment against what the bulk API already had
+    for the same CRN. Unlike open-seat counts, max_enrollment is a fixed
+    section capacity that basically never changes during a term -- so if
+    it disagrees a lot between the two sources, that's a strong signal the
+    column parsing here is wrong (not just "seats changed since we last
+    scraped"), worth checking the printed sample mismatches for.
     """
     path = os.path.join(DATA_DIR, f"{term_code}.json")
     if not os.path.exists(path):
@@ -276,10 +283,23 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
         data = json.load(f)
 
     matched = 0
+    max_agree = 0
+    max_disagree = 0
+    mismatch_samples = []
     for course in data.get("courses", []):
         ov = overrides.get(course.get("crn"))
         if not ov:
             continue
+
+        prior_max = course.get("max_enrollment")
+        if prior_max is not None:
+            if prior_max == ov["max_enrollment"]:
+                max_agree += 1
+            else:
+                max_disagree += 1
+                if len(mismatch_samples) < 8:
+                    mismatch_samples.append((course.get("crn"), prior_max, ov["max_enrollment"]))
+
         course["seats_available"] = ov["seats_available"]
         course["max_enrollment"] = ov["max_enrollment"]
         course["enrollment"] = ov["enrollment"]
@@ -287,6 +307,16 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
         course["open_section"] = ov["seats_available"] > 0
         course["seats_source"] = "class_schedule_rendered"
         matched += 1
+
+    if max_agree + max_disagree:
+        pct = round(100 * max_agree / (max_agree + max_disagree))
+        print(f"max_enrollment cross-check vs bulk API: {max_agree} agree, {max_disagree} disagree ({pct}% agreement)")
+        if pct < 90:
+            print("  LOW AGREEMENT -- this suggests the column parsing may be wrong, not just normal drift.")
+        if mismatch_samples:
+            print("  sample mismatches (crn, api_max, rendered_max):")
+            for crn, api_max, rendered_max in mismatch_samples:
+                print(f"    {crn}: api={api_max} rendered={rendered_max}")
 
     data["seats_refreshed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     with open(path, "w", encoding="utf-8") as f:

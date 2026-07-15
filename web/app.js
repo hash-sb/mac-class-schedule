@@ -9,7 +9,7 @@ const PAGE_SIZE = 50;
 const state = {
   termsIndex: { current_term_code: null, terms: [] },
   termCache: new Map(), // code -> {code, description, courses}
-  selectedTerm: null,   // a term code, or "all"
+  selectedTerms: new Set(),  // term codes, or the single value "all"
   meta: { subjects: [], instructors: [], dayPatterns: [] },
   selectedSubjects: new Set(),
   selectedDays: new Set(),  // exact meeting-day patterns, e.g. "MWF", "TR"
@@ -49,15 +49,19 @@ async function loadTermData(code) {
   }
 }
 
+/** Which term codes are "active" given the current selection: real codes, or every known term if "all" is selected. */
+function activeTermCodes() {
+  if (state.selectedTerms.has("all") || state.selectedTerms.size === 0) {
+    return state.termsIndex.terms.map((t) => t.code);
+  }
+  return [...state.selectedTerms];
+}
+
 /** Load whatever term(s) the current selection needs, returning a flat array of course records. */
 async function getActiveCourses() {
-  if (state.selectedTerm === "all") {
-    const scraped = state.termsIndex.terms.filter((t) => t.scraped);
-    const loaded = await Promise.all(scraped.map((t) => loadTermData(t.code)));
-    return loaded.filter(Boolean).flatMap((d) => d.courses);
-  }
-  const data = await loadTermData(state.selectedTerm);
-  return data ? data.courses : null; // null => this specific term has no data file
+  const codes = activeTermCodes();
+  const loaded = await Promise.all(codes.map((c) => loadTermData(c)));
+  return loaded.filter(Boolean).flatMap((d) => d.courses);
 }
 
 // ---------------- filtering / sorting (mirrors what a backend would do) ----------------
@@ -82,6 +86,7 @@ function readFilters() {
   const qRaw = el("q").value.trim();
   return {
     qClauses: buildSearchClauses(qRaw),
+    regexMode: el("regex-mode").checked,
     subjects: state.selectedSubjects,
     instructor: el("instructor").value.trim().toLowerCase(),
     crn: el("crn").value.trim(),
@@ -108,9 +113,12 @@ function activeFilterCount(f) {
 const COURSE_CODE_RE = /^([a-z]{2,6})\s*-?\s*(\d{1,4}[a-z]?)$/i;
 
 /** Does ONE search clause match this course? Tries the course-code shortcut
- * first, then treats the clause as a case-insensitive regex, falling back
- * to a plain substring check if the clause isn't valid regex syntax. */
-function clauseMatchesCourse(clause, haystackLower, c) {
+ * first (always, regardless of mode). In regex mode, treats the clause as
+ * a case-insensitive regular expression (falling back to plain substring
+ * if it isn't valid regex syntax). In simple mode (the default), it's
+ * always a plain case-insensitive substring match -- predictable, no
+ * special characters to worry about. */
+function clauseMatchesCourse(clause, haystackLower, c, regexMode) {
   const codeMatch = clause.match(COURSE_CODE_RE);
   if (codeMatch) {
     const courseSubj = (c.subject || "").toLowerCase();
@@ -119,12 +127,15 @@ function clauseMatchesCourse(clause, haystackLower, c) {
       return true;
     }
   }
-  try {
-    const re = new RegExp(clause, "i");
-    return re.test(haystackLower);
-  } catch (e) {
-    return haystackLower.includes(clause.toLowerCase());
+  if (regexMode) {
+    try {
+      const re = new RegExp(clause, "i");
+      return re.test(haystackLower);
+    } catch (e) {
+      return haystackLower.includes(clause.toLowerCase());
+    }
   }
+  return haystackLower.includes(clause.toLowerCase());
 }
 
 function courseMatches(c, f) {
@@ -134,7 +145,7 @@ function courseMatches(c, f) {
       ...(c.faculty || []).map((x) => x.name || ""),
     ].filter(Boolean).join(" ").toLowerCase();
 
-    const allMatch = f.qClauses.every((clause) => clauseMatchesCourse(clause, haystack, c));
+    const allMatch = f.qClauses.every((clause) => clauseMatchesCourse(clause, haystack, c, f.regexMode));
     if (!allMatch) return false;
   }
 
@@ -173,6 +184,17 @@ function courseMatches(c, f) {
   return true;
 }
 
+// Mirrors term_utils.py's season->month mapping, used only to sort by term chronologically.
+const SEASON_START_MONTH = { spring: 1, interim: 1, january: 1, winter: 1, summer: 6, fall: 9, autumn: 9 };
+function termSortKey(course) {
+  const desc = course.term_description || "";
+  const m = desc.match(/(spring|summer|fall|autumn|winter|interim|january)\D*(\d{4})/i);
+  if (!m) return 999912; // unparsable descriptions sort last
+  const year = parseInt(m[2], 10);
+  const month = SEASON_START_MONTH[m[1].toLowerCase()] || 6;
+  return year * 100 + month;
+}
+
 function sortCourses(courses) {
   const dir = state.sortDir === "desc" ? -1 : 1;
   const keyFn = {
@@ -183,6 +205,7 @@ function sortCourses(courses) {
       if (c.max_enrollment != null && c.enrollment != null) return c.max_enrollment - c.enrollment;
       return -999;
     },
+    term: (c) => termSortKey(c),
     subject: (c) => `${c.subject || ""} ${c.course_number || ""}`,
   }[state.sortBy] || ((c) => `${c.subject || ""} ${c.course_number || ""}`);
 
@@ -277,7 +300,7 @@ function seatCellHTML(c) {
 function renderResults(courses) {
   const tbody = el("results-body");
   tbody.innerHTML = "";
-  const showTermCol = state.selectedTerm === "all";
+  const showTermCol = state.selectedTerms.has("all") || state.selectedTerms.size > 1;
   el("term-col-header").hidden = !showTermCol;
 
   const start = (state.page - 1) * PAGE_SIZE;
@@ -384,24 +407,58 @@ function computeMeta(courses) {
   };
 }
 
-function renderTermSelect() {
-  const sel = el("term-select");
-  sel.innerHTML = "";
-
-  const allOpt = document.createElement("option");
-  allOpt.value = "all";
-  allOpt.textContent = "All semesters";
-  sel.appendChild(allOpt);
-
-  for (const t of state.termsIndex.terms) {
-    const opt = document.createElement("option");
-    opt.value = t.code;
-    opt.textContent = t.scraped ? t.description : `${t.description} (no data yet)`;
-    if (!t.scraped) opt.disabled = true;
-    sel.appendChild(opt);
+function termSelectionLabel() {
+  if (state.selectedTerms.has("all")) return "All semesters";
+  if (state.selectedTerms.size === 0) return "Select a term";
+  if (state.selectedTerms.size === 1) {
+    const code = [...state.selectedTerms][0];
+    const t = state.termsIndex.terms.find((x) => x.code === code);
+    return t ? t.description : code;
   }
+  return `${state.selectedTerms.size} semesters`;
+}
 
-  sel.value = state.selectedTerm;
+function updateTermToggleLabel() {
+  el("term-toggle-label").textContent = termSelectionLabel();
+}
+
+function renderTermPanel() {
+  const allBox = el("term-all");
+  allBox.checked = state.selectedTerms.has("all");
+
+  const list = el("term-checklist");
+  list.innerHTML = "";
+  for (const t of state.termsIndex.terms) {
+    const label = document.createElement("label");
+    label.className = "checkbox-row";
+    label.innerHTML = `<input type="checkbox" value="${escapeHTML(t.code)}"> ${escapeHTML(t.description)}`;
+    const input = label.querySelector("input");
+    input.checked = state.selectedTerms.has(t.code);
+    input.addEventListener("change", async () => {
+      state.selectedTerms.delete("all"); // picking a specific term always overrides "all"
+      if (input.checked) state.selectedTerms.add(t.code);
+      else state.selectedTerms.delete(t.code);
+      if (state.selectedTerms.size === 0) state.selectedTerms.add("all"); // never leave it empty
+      updateTermToggleLabel();
+      renderTermPanel();
+      await onTermSelectionChange();
+    });
+    list.appendChild(label);
+  }
+}
+
+async function onTermAllToggle() {
+  const allBox = el("term-all");
+  if (allBox.checked) {
+    state.selectedTerms = new Set(["all"]);
+  } else {
+    // Falling back to the current/upcoming term rather than leaving nothing selected.
+    state.selectedTerms = new Set([state.termsIndex.current_term_code].filter(Boolean));
+    if (state.selectedTerms.size === 0) state.selectedTerms = new Set(["all"]);
+  }
+  updateTermToggleLabel();
+  renderTermPanel();
+  await onTermSelectionChange();
 }
 
 function formatUpdatedAt(isoString) {
@@ -416,36 +473,49 @@ function formatUpdatedAt(isoString) {
 
 function updateLastUpdatedFooter() {
   const stampEl = el("last-updated");
-  // Prefer the specific term's own scraped_at when one term is selected;
-  // fall back to the overall terms.json generation time for "all semesters".
-  let stamp = null;
-  if (state.selectedTerm !== "all" && state.termCache.has(state.selectedTerm)) {
-    stamp = state.termCache.get(state.selectedTerm).scraped_at;
+  const codes = activeTermCodes().filter((c) => state.termCache.has(c));
+
+  if (codes.length === 0) {
+    stampEl.textContent = "";
+    return;
   }
-  if (!stamp) stamp = state.termsIndex.generated_at;
-  const formatted = formatUpdatedAt(stamp);
+
+  // Show the OLDEST relevant timestamp across whatever's selected, so a
+  // multi-term view doesn't hide one stale term behind a fresher one.
+  // Prefer each term's seats_refreshed_at (when the Class Schedule live
+  // pass touched it) over its original scraped_at, since seat freshness
+  // is usually the thing that matters most.
+  let oldest = null;
+  for (const code of codes) {
+    const d = state.termCache.get(code);
+    const stamp = d.seats_refreshed_at || d.scraped_at;
+    if (!stamp) continue;
+    if (!oldest || new Date(stamp) < new Date(oldest)) oldest = stamp;
+  }
+  if (!oldest) oldest = state.termsIndex.generated_at;
+
+  const formatted = formatUpdatedAt(oldest);
   stampEl.textContent = formatted ? `data as of ${formatted}` : "";
 }
 
 // ---------------- orchestration ----------------
 
 async function refresh() {
-  const nodata = el("no-data-state");
   const loading = el("loading-state");
   const wrap = el("results-wrap");
 
   loading.hidden = false;
-  nodata.hidden = true;
+  el("no-data-state").hidden = true;
   el("empty-state").hidden = true;
   wrap.style.display = "none";
 
   const courses = await getActiveCourses();
   loading.hidden = true;
 
-  if (courses === null) {
-    nodata.hidden = false;
+  if (!courses.length && activeTermCodes().length === 0) {
+    el("no-data-state").hidden = false;
     el("pagination").hidden = true;
-    el("results-count").textContent = "No data for this term";
+    el("results-count").textContent = "No term selected";
     return;
   }
 
@@ -460,8 +530,7 @@ async function refresh() {
   updateLastUpdatedFooter();
 }
 
-async function onTermChange() {
-  state.selectedTerm = el("term-select").value;
+async function onTermSelectionChange() {
   state.page = 1;
   state.selectedSubjects.clear();
   state.selectedDays.clear();
@@ -473,7 +542,22 @@ async function onTermChange() {
 }
 
 function wireStaticControls() {
-  el("term-select").addEventListener("change", onTermChange);
+  el("term-toggle").addEventListener("click", () => {
+    const panel = el("term-panel");
+    const willShow = panel.hidden;
+    panel.hidden = !willShow;
+    el("term-toggle").setAttribute("aria-expanded", String(willShow));
+  });
+
+  document.addEventListener("click", (e) => {
+    const picker = document.querySelector(".term-picker");
+    if (picker && !picker.contains(e.target)) {
+      el("term-panel").hidden = true;
+      el("term-toggle").setAttribute("aria-expanded", "false");
+    }
+  });
+
+  el("term-all").addEventListener("change", onTermAllToggle);
 
   let debounceTimer;
   const debouncedRefresh = () => {
@@ -488,6 +572,7 @@ function wireStaticControls() {
     el(id).addEventListener("input", debouncedRefresh);
   });
   el("seat-status").addEventListener("change", debouncedRefresh);
+  el("regex-mode").addEventListener("change", debouncedRefresh);
 
   el("toggle-filters").addEventListener("click", () => {
     const panel = el("filters");
@@ -503,6 +588,7 @@ function wireStaticControls() {
     el("start-after").value = "";
     el("end-before").value = "";
     el("seat-status").value = "";
+    el("regex-mode").checked = false;
     state.selectedSubjects.clear();
     state.selectedDays.clear();
     renderMeta();
@@ -535,10 +621,12 @@ async function init() {
   wireStaticControls();
   await loadTermsIndex();
 
-  state.selectedTerm = state.termsIndex.current_term_code || "all";
-  renderTermSelect();
+  const initial = state.termsIndex.current_term_code;
+  state.selectedTerms = new Set([initial || "all"]);
+  updateTermToggleLabel();
+  renderTermPanel();
 
-  await onTermChange();
+  await onTermSelectionChange();
 }
 
 init();

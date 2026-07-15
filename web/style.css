@@ -73,12 +73,13 @@ main{
 }
 
 .term-picker{
+  position:relative;
   display:flex;
   flex-direction:column;
   gap:0.3rem;
 }
 
-.term-picker label{
+.term-picker > label{
   font-family:var(--mono);
   font-size:0.7rem;
   letter-spacing:0.08em;
@@ -86,7 +87,7 @@ main{
   color:#c9c6bd;
 }
 
-#term-select{
+.term-toggle-btn{
   background:var(--paper-raised);
   color:var(--ink);
   border:1px solid var(--line);
@@ -96,6 +97,43 @@ main{
   font-size:0.95rem;
   font-weight:600;
   min-width:220px;
+  text-align:left;
+  cursor:pointer;
+}
+
+.term-toggle-btn:hover{ border-color:var(--scarlet); }
+
+.term-panel{
+  position:absolute;
+  top:100%;
+  right:0;
+  margin-top:0.4rem;
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:0.65rem;
+  min-width:260px;
+  max-width:320px;
+  z-index:30;
+  box-shadow:0 8px 24px rgba(0,0,0,0.18);
+}
+
+.term-panel .checkbox-row{
+  color:var(--ink);
+  text-transform:none;
+  font-family:var(--sans);
+  letter-spacing:normal;
+}
+
+.term-panel > .checkbox-row{
+  padding-bottom:0.4rem;
+  margin-bottom:0.4rem;
+  border-bottom:1px solid var(--line);
+  font-weight:600;
+}
+
+.term-checklist{
+  max-height:260px;
 }
 
 /* ---------- search + filters ---------- */
@@ -115,6 +153,27 @@ main{
   background:var(--paper-raised);
   color:var(--ink);
   font-family:var(--sans);
+}
+
+.regex-toggle{
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  padding:0 0.9rem;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--paper-raised);
+  font-family:var(--mono);
+  font-size:0.8rem;
+  color:var(--ink-soft);
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.regex-toggle:has(input:checked){
+  border-color:var(--scarlet);
+  color:var(--scarlet);
+  background:var(--scarlet-dim);
 }
 
 #q:focus-visible, select:focus-visible, input:focus-visible, button:focus-visible{
@@ -457,6 +516,7 @@ main{
 @media (max-width: 600px){
   .filters-grid{ grid-template-columns:1fr; }
   .header-inner{ flex-direction:column; align-items:flex-start; }
-  #term-select{ min-width:100%; }
+  .term-toggle-btn{ min-width:100%; }
+  .term-panel{ right:auto; left:0; }
   .search-bar{ flex-direction:column; }
 }

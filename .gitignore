@@ -1,4 +1,5 @@
 __pycache__/
 *.pyc
 .DS_Store
-web/data/_debug_*.json
+web/data/*.json
+web/data/_debug_*
