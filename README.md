@@ -190,6 +190,27 @@ already collected from Banner's search API on `oci-macxe.macalester.edu`:
   up empty (a defensive hedge, since this parsing is inherently harder to
   verify than the well-documented Banner search API).
 
+### Seats specifically: a confirmed DOM lookup, not a guess
+
+Every prior approach to reading `seats_available` off this page guessed
+at column positions in the rendered table, which repeatedly produced
+wrong or missing values. `extract_seats_by_id()` instead does a direct,
+unambiguous lookup: each class lives in a `<table class="TableClass">`,
+and the open-seats value sits in a `<td id="SeatsAvailCRN{crn}">` --
+confirmed against the real page's structure, not inferred from example
+rows. This is now the authoritative source for `seats_available` whenever
+it covers a CRN.
+
+`max_enrollment` doesn't have a confirmed DOM id yet, so it still comes
+from row-position guessing (the cell alongside wherever seats would have
+been). To keep that honest: if the ID-based seats value disagrees with
+what the row-position guess found for that same row, the whole column
+mapping is treated as suspect for that row -- `max_enrollment` is
+withheld rather than kept from a row that already failed one cross-check.
+Every run prints `seats sourced: N from the confirmed SeatsAvailCRN
+element, M from row-position fallback` so it's obvious how much of a
+term's data is on solid ground versus still a guess.
+
 This is what eliminates the need for any "unverified" indicator in the
 UI -- every course in a reconciled term's list is confirmed present (and
 seat-accurate) as of that run, not just seat-patched when we got lucky
@@ -243,16 +264,23 @@ Every reconciliation run prints:
   whichever row came later win.
 - **Found-but-unparseable sections** -- a real bug, now fixed: a course
   row could be correctly matched by CRN but have trailing cells that
-  didn't parse as a valid seat/max pair (e.g. an extra trailing column
-  for some section/schedule type), and the old code unconditionally
+  didn't parse as a valid seat/max pair, and the old code unconditionally
   overwrote the course's seat fields with that `None` anyway -- silently
   blanking out previously-good data instead of leaving it alone. Fixed:
   seats are only ever overwritten when a real pair was parsed; otherwise
   prior data (if any) is kept and the section is named in this log
-  category so gaps stay visible instead of silent. Seat-pair extraction
-  is also more lenient now -- it scans from the right for the first valid
-  integer pair rather than assuming they're always the literal last two
-  cells, tolerating a trailing non-numeric cell after the real pair.
+  category so gaps stay visible instead of silent.
+
+  Seat-pair extraction briefly scanned from the right for *any* adjacent
+  integer pair (not just the literal last two cells), to tolerate a
+  hypothetical trailing extra column -- **reverted**, since that leniency
+  risked grabbing an unrelated numeric cell (e.g. a room number) and
+  confidently presenting it as seats/max, which produces wrong-but-
+  plausible-looking values instead of a safe "couldn't parse" outcome.
+  Missing data is a much better failure mode than wrong data. Extraction
+  now strictly requires the literal last two cells, plus a sanity bound
+  (`0 < max_enrollment <= 999`) rejecting anything outside a realistic
+  class size.
 
 Also: `scrape_classschedule.py` tries clicking an "Update Open Seats"
 control if it finds one on the page before capturing numbers, logging

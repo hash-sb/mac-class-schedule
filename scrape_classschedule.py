@@ -177,6 +177,36 @@ def render_page(term_code, headless=True, debug=False, extra_wait_ms=3000):
             browser.close()
 
 
+def extract_seats_by_id(html):
+    """
+    The confirmed, authoritative way to get open-seat counts on this page:
+    each class lives in a <table class="TableClass">, and the open-seats
+    value is directly in a <td id="SeatsAvailCRN{crn}">. This is a direct,
+    unambiguous DOM lookup -- no row-shape or column-position guessing
+    involved, unlike everything else this file has tried so far.
+
+    Returns {crn: seats_available_int}.
+    """
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(html, "html.parser")
+    seats_by_crn = {}
+
+    tables = soup.find_all("table", class_="TableClass")
+    search_scope = tables if tables else [soup]  # fall back to whole doc if the class name ever changes
+
+    for scope in search_scope:
+        for td in scope.find_all("td", id=True):
+            if not td["id"].startswith("SeatsAvailCRN"):
+                continue
+            crn = td["id"][len("SeatsAvailCRN"):]
+            text = td.get_text(strip=True)
+            if INT_RE.match(text):
+                seats_by_crn[crn] = int(text)
+
+    return seats_by_crn
+
+
 def parse_via_tables(html):
     """
     Primary strategy: look for real <table>/<tr> markup in the rendered
@@ -298,37 +328,54 @@ def group_rows_by_crn(table_rows):
 
 def _find_seat_pair(cells):
     """
-    Finds (seats_available, max_enrollment) as the rightmost two ADJACENT
-    cells that both parse as integers, scanning from the end. Usually
-    that's just the literal last two cells, but this tolerates a trailing
-    non-numeric cell (blank, a note, a waitlist marker, etc.) that some
-    row/section types apparently render after the real seat/max pair --
-    assuming the exact last two cells always makes rows like that fail to
-    parse at all, silently leaving seats blank even though the numbers
-    are right there in the row. Returns None if no such pair is found.
+    Finds (seats_available, max_enrollment) from the literal last two
+    cells only. This used to scan further left for any adjacent integer
+    pair, to tolerate a hypothetical trailing extra column -- reverted:
+    that leniency risked grabbing an unrelated numeric cell (e.g. a room
+    number) as if it were seats/max, which produces confidently-wrong
+    values instead of a safe "couldn't parse this row" outcome. Missing
+    data (kept safe by the caller falling back to prior values) is a much
+    better failure mode than wrong data. Returns None if the last two
+    cells aren't both integers, or if max_enrollment is outside a sane
+    range for a class size (catches grabbing the wrong number entirely).
     """
-    for i in range(len(cells) - 1, 0, -1):
-        if INT_RE.match(cells[i]) and INT_RE.match(cells[i - 1]):
-            return int(cells[i - 1]), int(cells[i])
+    if len(cells) >= 2 and INT_RE.match(cells[-2]) and INT_RE.match(cells[-1]):
+        seats, max_enroll = int(cells[-2]), int(cells[-1])
+        if 0 < max_enroll <= 999:
+            return seats, max_enroll
     return None
 
 
-def build_render_record(crn, rows):
+def build_render_record(crn, rows, seats_by_id=None):
     """
     Builds one course record purely from the rendered Class Schedule rows
     for a CRN (possibly several rows, e.g. one per meeting pattern).
-    Returns (record, had_conflict) where had_conflict is True if different
-    rows disagreed on seat numbers (first row wins in that case).
+
+    seats_available comes from seats_by_id (the confirmed <td
+    id="SeatsAvailCRN...">  lookup) when available for this CRN --
+    authoritative, no guessing. max_enrollment has no confirmed DOM id
+    yet, so it still comes from row-position guessing (the cell right
+    before whatever position seats_available would have been in, when
+    that position parses as an integer pair). If seats_by_id doesn't have
+    this CRN, seats_available falls back to that same row-position guess.
+
+    Returns (record, had_conflict) where had_conflict is True if
+    different rows disagreed on max_enrollment, or if the row-based seat
+    guess disagreed with the authoritative ID-based value (informational
+    -- the ID value always wins either way).
     """
+    seats_by_id = seats_by_id or {}
     first_match, first_cells = rows[0]
     subject, course_number, section = first_match.group(1).upper(), first_match.group(2), first_match.group(3)
     title = first_cells[1] if len(first_cells) > 1 else None
 
     meetings = []
     faculty = []
-    seats_available = None
     max_enrollment = None
     had_conflict = False
+
+    seats_available = seats_by_id.get(crn)
+    seats_from_id = seats_available is not None
 
     for _, cells in rows:
         for cell in cells:
@@ -341,11 +388,25 @@ def build_render_record(crn, rows):
                     faculty = parsed
         seat_pair = _find_seat_pair(cells)
         if seat_pair:
-            sa, me = seat_pair
-            if seats_available is None:
-                seats_available, max_enrollment = sa, me
-            elif (sa, me) != (seats_available, max_enrollment):
+            row_seats, row_max = seat_pair
+            mismatch_vs_id = seats_from_id and row_seats != seats_available
+            if mismatch_vs_id:
+                # The row's guessed "seats" position disagrees with the
+                # authoritative ID value -- that means the whole
+                # last-two-cells column mapping is suspect for this row,
+                # not just seats, so don't trust row_max as max_enrollment
+                # from it either.
                 had_conflict = True
+            else:
+                if max_enrollment is None:
+                    max_enrollment = row_max
+                elif row_max != max_enrollment:
+                    had_conflict = True
+                if not seats_from_id:
+                    if seats_available is None:
+                        seats_available = row_seats
+                    elif row_seats != seats_available:
+                        had_conflict = True
 
     enrollment = (max_enrollment - seats_available) if (seats_available is not None and max_enrollment is not None) else None
 
@@ -356,6 +417,7 @@ def build_render_record(crn, rows):
         "section": section,
         "title": title,
         "seats_available": seats_available,
+        "seats_from_id": seats_from_id,
         "max_enrollment": max_enrollment,
         "enrollment": enrollment,
         "meetings": meetings,
@@ -364,7 +426,7 @@ def build_render_record(crn, rows):
     return record, had_conflict
 
 
-def reconcile_term_with_class_schedule(term_code, table_rows):
+def reconcile_term_with_class_schedule(term_code, table_rows, seats_by_id=None):
     """
     Makes the rendered Class Schedule page authoritative for BOTH which
     courses exist in this term AND their seat counts, not just a seat
@@ -384,6 +446,11 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
         site, so falling back rather than blanking out data on a parse
         miss is the safer failure mode).
 
+    seats_by_id (from extract_seats_by_id) is the confirmed, authoritative
+    source for seats_available -- a direct <td id="SeatsAvailCRN..."> DOM
+    lookup, not a guess. Falls back to row-position guessing only for
+    CRNs it doesn't cover.
+
     This eliminates the old "unverified" gap entirely for terms this runs
     against -- every course in the resulting list is confirmed present
     (and seat-accurate) as of this run, not just seat-patched-if-lucky.
@@ -391,6 +458,7 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
     Returns (new_count, updated_count, dropped_count, total_count), or
     all zeros if there's no existing term file yet.
     """
+    seats_by_id = seats_by_id or {}
     path = os.path.join(DATA_DIR, f"{term_code}.json")
     if not os.path.exists(path):
         print(f"No existing web/data/{term_code}.json to reconcile -- run scraper.py for this term first.")
@@ -411,9 +479,16 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
     updated_count = 0
     new_count = 0
     unparseable_seats = []
+    from_id_count = 0
+    from_row_count = 0
 
     for crn, rows in groups.items():
-        render, had_conflict = build_render_record(crn, rows)
+        render, had_conflict = build_render_record(crn, rows, seats_by_id=seats_by_id)
+        if render["seats_available"] is not None:
+            if render["seats_from_id"]:
+                from_id_count += 1
+            else:
+                from_row_count += 1
         if had_conflict:
             conflicts.append(crn)
 
@@ -517,6 +592,9 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
     if skipped_rows:
         print(f"  ({skipped_rows} rendered rows didn't match the expected 'SUBJ NUM-SEC (CRN)' shape and were skipped)")
 
+    if from_id_count or from_row_count:
+        print(f"  seats sourced: {from_id_count} from the confirmed SeatsAvailCRN element, {from_row_count} from row-position fallback")
+
     data["courses"] = new_courses
     data["seats_refreshed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     with open(path, "w", encoding="utf-8") as f:
@@ -548,8 +626,11 @@ def process_one_term(term_code, headless=True, debug=False, no_merge=False, page
         print(f"No usable table rows for {term_code} -- skipping reconciliation for this term.")
         return False
 
+    seats_by_id = extract_seats_by_id(html)
+    print(f"seats_by_id: found {len(seats_by_id)} SeatsAvailCRN element(s) on the page")
+
     if not no_merge:
-        new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(term_code, table_rows)
+        new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(term_code, table_rows, seats_by_id=seats_by_id)
         if total:
             print(f"Reconciled web/data/{term_code}.json: {updated_count} updated, {new_count} added, {dropped_count} dropped -- {total} total sections now.")
     return True
@@ -638,7 +719,9 @@ def main():
             print(f"\nWrote raw parsed rows to {out_path}")
 
         if not args.no_merge:
-            new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(args.term, table_rows)
+            seats_by_id = extract_seats_by_id(html)
+            print(f"seats_by_id: found {len(seats_by_id)} SeatsAvailCRN element(s) on the page")
+            new_count, updated_count, dropped_count, total = reconcile_term_with_class_schedule(args.term, table_rows, seats_by_id=seats_by_id)
             if total:
                 print(f"\nReconciled web/data/{args.term}.json: {updated_count} updated, {new_count} added, {dropped_count} dropped -- {total} total sections now.")
     elif text_hits:
