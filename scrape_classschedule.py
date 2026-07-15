@@ -62,7 +62,7 @@ from playwright.sync_api import sync_playwright
 BASE_URL = "https://macadmsys.macalester.edu/macssb/customPage/page/classSchedule"
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "data")
 
-CRN_RE = re.compile(r"\b(\d{5})\b")  # Banner CRNs are typically 5 digits
+CRN_RE = re.compile(r"\b(\d{4,6})\b")  # Banner CRNs are typically 5 digits, but not always
 COURSE_CODE_RE = re.compile(r"\b([A-Z]{2,6})\s?-?\s?(\d{3}[A-Z]?)\b")
 CREDIT_RE = re.compile(r"\b(\d(?:\.\d+)?)\s*(?:credit|cr\.?)\b", re.IGNORECASE)
 SEATS_RE = re.compile(r"seats?\s*(?:available|open)?[:\s]*(-?\d+)", re.IGNORECASE)
@@ -296,6 +296,23 @@ def group_rows_by_crn(table_rows):
     return groups, skipped
 
 
+def _find_seat_pair(cells):
+    """
+    Finds (seats_available, max_enrollment) as the rightmost two ADJACENT
+    cells that both parse as integers, scanning from the end. Usually
+    that's just the literal last two cells, but this tolerates a trailing
+    non-numeric cell (blank, a note, a waitlist marker, etc.) that some
+    row/section types apparently render after the real seat/max pair --
+    assuming the exact last two cells always makes rows like that fail to
+    parse at all, silently leaving seats blank even though the numbers
+    are right there in the row. Returns None if no such pair is found.
+    """
+    for i in range(len(cells) - 1, 0, -1):
+        if INT_RE.match(cells[i]) and INT_RE.match(cells[i - 1]):
+            return int(cells[i - 1]), int(cells[i])
+    return None
+
+
 def build_render_record(crn, rows):
     """
     Builds one course record purely from the rendered Class Schedule rows
@@ -322,8 +339,9 @@ def build_render_record(crn, rows):
                 parsed = parse_instructors_text(cell)
                 if parsed:
                     faculty = parsed
-        if len(cells) >= 2 and INT_RE.match(cells[-2]) and INT_RE.match(cells[-1]):
-            sa, me = int(cells[-2]), int(cells[-1])
+        seat_pair = _find_seat_pair(cells)
+        if seat_pair:
+            sa, me = seat_pair
             if seats_available is None:
                 seats_available, max_enrollment = sa, me
             elif (sa, me) != (seats_available, max_enrollment):
@@ -392,6 +410,7 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
     new_courses = []
     updated_count = 0
     new_count = 0
+    unparseable_seats = []
 
     for crn, rows in groups.items():
         render, had_conflict = build_render_record(crn, rows)
@@ -399,10 +418,11 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
             conflicts.append(crn)
 
         existing = existing_by_crn.get(crn)
+        seats_parsed = render["seats_available"] is not None and render["max_enrollment"] is not None
 
         if existing:
             prior_max = existing.get("max_enrollment")
-            if prior_max is not None and render["max_enrollment"] is not None:
+            if seats_parsed and prior_max is not None:
                 if prior_max == render["max_enrollment"]:
                     max_agree += 1
                 else:
@@ -417,6 +437,21 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
             if render["faculty"]:
                 course["faculty"] = render["faculty"]
             updated_count += 1
+
+            if seats_parsed:
+                course["seats_available"] = render["seats_available"]
+                course["max_enrollment"] = render["max_enrollment"]
+                course["enrollment"] = render["enrollment"]
+                course["seats_estimated"] = False
+                course["seats_source"] = "class_schedule_rendered"
+                course["open_section"] = render["seats_available"] > 0
+            else:
+                # Row was found (matched by CRN) but its trailing cells
+                # didn't parse as a valid seat/max pair -- keep whatever
+                # seat data the course already had rather than blanking it
+                # out. A found-but-unparseable row is a parsing gap, not
+                # confirmation that the section has no seat info.
+                unparseable_seats.append(f"{course.get('subject')} {course.get('course_number')}-{course.get('section')} (CRN {crn})")
         else:
             course = {
                 "crn": crn,
@@ -436,15 +471,17 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
                 "waitlist_capacity": None,
                 "faculty": render["faculty"],
                 "meetings": render["meetings"],
+                "seats_available": render["seats_available"],
+                "max_enrollment": render["max_enrollment"],
+                "enrollment": render["enrollment"],
+                "seats_estimated": False,
+                "seats_source": "class_schedule_rendered" if seats_parsed else "banner_search_api",
+                "open_section": bool(render["seats_available"] and render["seats_available"] > 0),
             }
             new_count += 1
+            if not seats_parsed:
+                unparseable_seats.append(f"{course.get('subject')} {course.get('course_number')}-{course.get('section')} (CRN {crn}) [new section]")
 
-        course["seats_available"] = render["seats_available"]
-        course["max_enrollment"] = render["max_enrollment"]
-        course["enrollment"] = render["enrollment"]
-        course["seats_estimated"] = False
-        course["seats_source"] = "class_schedule_rendered"
-        course["open_section"] = bool(render["seats_available"] and render["seats_available"] > 0)
         new_courses.append(course)
 
     dropped = [c for c in existing_by_crn if c not in groups]
@@ -461,6 +498,11 @@ def reconcile_term_with_class_schedule(term_code, table_rows):
 
     if new_count:
         print(f"  {new_count} section(s) found on the rendered page that weren't in the bulk API scrape -- added with limited metadata (no credits/schedule type available from this page).")
+
+    if unparseable_seats:
+        print(f"  {len(unparseable_seats)} section(s) were found on the rendered page but their trailing cells didn't parse as a seat/max pair -- kept prior seat data (if any) rather than blanking it out:")
+        for s in unparseable_seats[:8]:
+            print(f"    {s}")
 
     if max_agree + max_disagree:
         pct = round(100 * max_agree / (max_agree + max_disagree))

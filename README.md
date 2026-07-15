@@ -241,6 +241,18 @@ Every reconciliation run prints:
   multiple meeting patterns) and they disagree on seat numbers, the first
   row is kept and the conflict is logged rather than silently letting
   whichever row came later win.
+- **Found-but-unparseable sections** -- a real bug, now fixed: a course
+  row could be correctly matched by CRN but have trailing cells that
+  didn't parse as a valid seat/max pair (e.g. an extra trailing column
+  for some section/schedule type), and the old code unconditionally
+  overwrote the course's seat fields with that `None` anyway -- silently
+  blanking out previously-good data instead of leaving it alone. Fixed:
+  seats are only ever overwritten when a real pair was parsed; otherwise
+  prior data (if any) is kept and the section is named in this log
+  category so gaps stay visible instead of silent. Seat-pair extraction
+  is also more lenient now -- it scans from the right for the first valid
+  integer pair rather than assuming they're always the literal last two
+  cells, tolerating a trailing non-numeric cell after the real pair.
 
 Also: `scrape_classschedule.py` tries clicking an "Update Open Seats"
 control if it finds one on the page before capturing numbers, logging
