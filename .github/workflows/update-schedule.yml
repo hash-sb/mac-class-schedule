@@ -44,6 +44,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"   # caches downloaded wheels, keyed off requirements.txt
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -57,9 +58,27 @@ jobs:
             python registration_calendar.py
           fi
 
-      - name: Install Playwright's Chromium
+      - name: Cache Playwright's Chromium binary
+        id: playwright-cache
         if: steps.window.outputs.run_full == 'true'
-        run: python -m playwright install --with-deps chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Install Chromium's OS-level dependencies
+        if: steps.window.outputs.run_full == 'true'
+        run: python -m playwright install-deps chromium
+        # This installs system packages (apt) rather than the browser
+        # binary itself, so it has to run every time regardless of cache --
+        # each GitHub-hosted run gets a brand new VM, nothing OS-level
+        # persists between runs. It's fast (~10-20s) though; the slow part
+        # is the actual ~150MB+ browser download below, which the cache
+        # step above lets most runs skip entirely.
+
+      - name: Download Chromium (only on a cache miss)
+        if: steps.window.outputs.run_full == 'true' && steps.playwright-cache.outputs.cache-hit != 'true'
+        run: python -m playwright install chromium
 
       - name: Scrape current data
         if: steps.window.outputs.run_full == 'true'

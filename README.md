@@ -202,6 +202,41 @@ where `is_term_finished()` is false (i.e. terms that can still have
 enrollment changes) -- closed terms keep whatever `scraper.py` already
 collected, since those numbers can't change anymore anyway.
 
+## Making runs faster
+
+A "full" run (inside a registration window, or the daily baseline) has two
+slow parts: downloading Chromium and launching a browser per term. Both are
+addressed:
+
+- **Chromium binary is cached** (`actions/cache`, keyed on `requirements.txt`)
+  -- most runs skip the ~150MB+ download entirely and only pay for the
+  OS-level dependency install (`playwright install-deps`), which is fast
+  (~10-20s) and has to run every time anyway since GitHub-hosted runners
+  are a fresh VM each run.
+- **pip dependencies are cached** via `actions/setup-python`'s built-in
+  `cache: pip`.
+- **`scrape_classschedule.py` reuses one browser across all terms** in a
+  multi-term run (`--all-nonfinished` / `--all`) instead of launching a
+  fresh Chromium process per term -- only `page.new_page()` per term, not
+  a full browser relaunch.
+
+Further levers you can pull yourself, each a real speed/coverage trade-off:
+
+- **`--max-terms`** in the "Scrape current data" step (currently 16) --
+  fewer terms means a faster `scraper.py` pass and fewer terms for
+  `--all-nonfinished` to potentially touch, at the cost of less history
+  available in "All semesters" search.
+- **The cron frequency** itself (`0 * * * *`, hourly) -- the
+  `registration_calendar.py` gate already skips most hours for free, so
+  this mostly matters for how promptly a run picks up right as a window
+  opens, not for cost (skipped runs finish in seconds).
+- **`extra_wait_ms` in `scrape_classschedule.py`** (currently a flat 3000ms
+  per term, plus another 2000ms after clicking "Update Open Seats") -- these
+  are conservative fixed waits since I can't verify the page's real loading
+  behavior from my sandbox. If you find it reliably finishes sooner, this
+  is tunable, but shortening it risks silently capturing an unfinished
+  render instead of a real speed problem.
+
 ## Demo data
 
 `generate_sample_data.py` fills `web/data/` with realistic-but-fake course

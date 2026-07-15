@@ -125,50 +125,56 @@ def maybe_refresh_open_seats(page):
     return False
 
 
-def render_page(term_code, headless=True, debug=False, extra_wait_ms=3000):
-    """Loads the Class Schedule page for a term with a real browser and returns (html, visible_text)."""
+def _load_and_capture(page, term_code, debug=False, extra_wait_ms=3000):
+    """Navigates an already-open page to a term's schedule and returns (html, visible_text). Doesn't own the browser/page lifecycle."""
     url = f"{BASE_URL}?term={term_code}"
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless)
-        page = browser.new_page(user_agent="Mozilla/5.0 (compatible; MacScheduleTool/1.0; personal course-search project)")
+    page.goto(url, wait_until="networkidle", timeout=45000)
+    dismiss_cookie_banner(page)
+    maybe_trigger_search(page)
 
-        page.goto(url, wait_until="networkidle", timeout=45000)
-        dismiss_cookie_banner(page)
-        maybe_trigger_search(page)
+    # Angular apps often keep polling briefly after "networkidle";
+    # give it a bit more time, then wait for network to settle again.
+    page.wait_for_timeout(extra_wait_ms)
+    try:
+        page.wait_for_load_state("networkidle", timeout=15000)
+    except Exception:
+        pass  # fine if it never goes fully idle again; we already waited
 
-        # Angular apps often keep polling briefly after "networkidle";
-        # give it a bit more time, then wait for network to settle again.
-        page.wait_for_timeout(extra_wait_ms)
+    # Now that the table's loaded once, try to force a live seat refresh
+    # rather than trust whatever was in the initial snapshot.
+    if maybe_refresh_open_seats(page):
+        print("  clicked 'Update Open Seats' -- waiting for refreshed numbers...")
+        page.wait_for_timeout(2000)
         try:
             page.wait_for_load_state("networkidle", timeout=15000)
         except Exception:
-            pass  # fine if it never goes fully idle again; we already waited
+            pass
+    else:
+        print("  no 'Update Open Seats' control found -- using the page's initial numbers.")
 
-        # Now that the table's loaded once, try to force a live seat refresh
-        # rather than trust whatever was in the initial snapshot.
-        if maybe_refresh_open_seats(page):
-            print("  clicked 'Update Open Seats' -- waiting for refreshed numbers...")
-            page.wait_for_timeout(2000)
-            try:
-                page.wait_for_load_state("networkidle", timeout=15000)
-            except Exception:
-                pass
-        else:
-            print("  no 'Update Open Seats' control found -- using the page's initial numbers.")
+    html = page.content()
+    visible_text = page.inner_text("body")
 
-        html = page.content()
-        visible_text = page.inner_text("body")
+    if debug:
+        os.makedirs(DATA_DIR, exist_ok=True)
+        page.screenshot(path=os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.png"), full_page=True)
+        with open(os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.html"), "w", encoding="utf-8") as f:
+            f.write(html)
+        with open(os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.txt"), "w", encoding="utf-8") as f:
+            f.write(visible_text)
 
-        if debug:
-            os.makedirs(DATA_DIR, exist_ok=True)
-            page.screenshot(path=os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.png"), full_page=True)
-            with open(os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.html"), "w", encoding="utf-8") as f:
-                f.write(html)
-            with open(os.path.join(DATA_DIR, f"_debug_classschedule_{term_code}.txt"), "w", encoding="utf-8") as f:
-                f.write(visible_text)
+    return html, visible_text
 
-        browser.close()
-        return html, visible_text
+
+def render_page(term_code, headless=True, debug=False, extra_wait_ms=3000):
+    """Single-term convenience wrapper: opens its own browser, renders one term, closes everything."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=headless)
+        page = browser.new_page(user_agent="Mozilla/5.0 (compatible; MacScheduleTool/1.0; personal course-search project)")
+        try:
+            return _load_and_capture(page, term_code, debug=debug, extra_wait_ms=extra_wait_ms)
+        finally:
+            browser.close()
 
 
 def parse_via_tables(html):
@@ -289,11 +295,19 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
     return matched, len(data.get("courses", []))
 
 
-def process_one_term(term_code, headless=True, debug=False, no_merge=False):
-    """Render, parse, and (unless no_merge) merge live seats for a single term. Returns True on success."""
+def process_one_term(term_code, headless=True, debug=False, no_merge=False, page=None):
+    """
+    Render, parse, and (unless no_merge) merge live seats for a single term.
+    If `page` is given, reuses that already-open browser page (faster for
+    multi-term runs -- avoids a fresh browser launch per term). Otherwise
+    opens and closes its own browser. Returns True on success.
+    """
     print(f"\n=== {term_code} ===")
     print(f"Rendering {BASE_URL}?term={term_code} ...")
-    html, visible_text = render_page(term_code, headless=headless, debug=debug)
+    if page is not None:
+        html, visible_text = _load_and_capture(page, term_code, debug=debug)
+    else:
+        html, visible_text = render_page(term_code, headless=headless, debug=debug)
 
     table_rows = parse_via_tables(html)
     text_hits = parse_via_text(visible_text) if not table_rows else []
@@ -360,8 +374,20 @@ def main():
 
         label = "all scraped" if args.all_terms else "non-finished"
         print(f"Refreshing live seats for {len(targets)} {label} term(s): {[t['code'] for t in targets]}")
-        for t in targets:
-            process_one_term(t["code"], headless=not args.headed, debug=args.debug, no_merge=args.no_merge)
+
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=not args.headed)
+            try:
+                for t in targets:
+                    page = browser.new_page(
+                        user_agent="Mozilla/5.0 (compatible; MacScheduleTool/1.0; personal course-search project)"
+                    )
+                    try:
+                        process_one_term(t["code"], debug=args.debug, no_merge=args.no_merge, page=page)
+                    finally:
+                        page.close()
+            finally:
+                browser.close()
         return
 
     print(f"Rendering {BASE_URL}?term={args.term} ...")
