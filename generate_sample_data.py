@@ -105,6 +105,7 @@ def make_term_courses(term_code, term_desc, seed):
                         "part_of_term": "Full Term",
                         "seats_available": seats,
                         "seats_estimated": seats_estimated,
+                        "seats_source": "class_schedule_rendered" if rng.random() < 0.85 else "banner_search_api",
                         "max_enrollment": max_enroll,
                         "enrollment": enrolled,
                         "waitlist_available": 5 if seats == 0 else 0,

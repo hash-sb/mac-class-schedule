@@ -227,34 +227,59 @@ INT_RE = re.compile(r"^-?\d+$")
 def extract_seat_overrides(table_rows):
     """
     Given the parsed row-cell-lists, pull out {crn: {seats_available,
-    max_enrollment, enrollment}}. Based on the confirmed row shape:
-        [0] "SUBJ NUM-SEC (CRN)"   e.g. "AMST 130-F1 (10018)"
-        [1] title
-        [2] "Meeting: ..."
-        [3] "Instructor: ..."
-        [4] seats available (can be negative on overrides)
-        [5] max enrollment
-    Rows that don't match this exact shape are skipped and counted, not
+    max_enrollment, enrollment}}. Confirmed row shape:
+        [0]    "SUBJ NUM-SEC (CRN)"   e.g. "AMST 130-F1 (10018)"
+        [1]    title
+        [2]    "Meeting: ..."
+        [3]    "Instructor: ..."
+        [-2]   seats available (can be negative on overrides)
+        [-1]   max enrollment
+
+    Seats/max are read from the LAST TWO cells rather than fixed indices
+    4/5 -- some section/schedule types render extra or fewer descriptive
+    columns before them (e.g. cross-listed courses, multi-meeting
+    sections), and pinning to the end is more robust to that than
+    assuming every row has exactly 6 cells.
+
+    If the same CRN appears on more than one row (e.g. a section with
+    multiple meeting patterns, each getting its own row) and those rows
+    DISAGREE on seats/max, that's a real ambiguity -- we keep the first
+    occurrence and report the conflict rather than silently letting
+    whichever row happened to come later win.
+
+    Rows that don't match this shape at all are skipped and counted, not
     guessed at -- better to under-cover than silently merge wrong numbers.
     """
     overrides = {}
     skipped = 0
+    conflicts = []
     for cells in table_rows:
-        if len(cells) < 6:
+        if len(cells) < 3:
             skipped += 1
             continue
         m = CRN_IN_CELL0_RE.search(cells[0])
-        if not m or not INT_RE.match(cells[4]) or not INT_RE.match(cells[5]):
+        if not m or not INT_RE.match(cells[-2]) or not INT_RE.match(cells[-1]):
             skipped += 1
             continue
         crn = m.group(1)
-        seats_available = int(cells[4])
-        max_enrollment = int(cells[5])
-        overrides[crn] = {
+        seats_available = int(cells[-2])
+        max_enrollment = int(cells[-1])
+        new_ov = {
             "seats_available": seats_available,
             "max_enrollment": max_enrollment,
             "enrollment": max_enrollment - seats_available,
         }
+        if crn in overrides:
+            if overrides[crn] != new_ov:
+                conflicts.append((crn, overrides[crn], new_ov))
+            continue  # keep the first-seen row for this CRN
+        overrides[crn] = new_ov
+
+    if conflicts:
+        print(f"  WARNING: {len(conflicts)} CRN(s) had multiple rows with different seat numbers -- kept the first row seen for each:")
+        for crn, first, other in conflicts[:8]:
+            print(f"    CRN {crn}: kept {first} over conflicting {other}")
+
     return overrides, skipped
 
 
@@ -286,9 +311,14 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
     max_agree = 0
     max_disagree = 0
     mismatch_samples = []
+    unmatched_samples = []
     for course in data.get("courses", []):
         ov = overrides.get(course.get("crn"))
         if not ov:
+            if len(unmatched_samples) < 8:
+                unmatched_samples.append(
+                    f"{course.get('subject')} {course.get('course_number')}-{course.get('section')} (CRN {course.get('crn')})"
+                )
             continue
 
         prior_max = course.get("max_enrollment")
@@ -307,6 +337,15 @@ def merge_seat_overrides_into_term_file(term_code, overrides):
         course["open_section"] = ov["seats_available"] > 0
         course["seats_source"] = "class_schedule_rendered"
         matched += 1
+
+    total_courses = len(data.get("courses", []))
+    unmatched_count = total_courses - matched
+    if unmatched_count:
+        print(f"  {unmatched_count}/{total_courses} sections were NOT found on the rendered page -- they keep whatever scraper.py's bulk API already had (not corrected this pass).")
+        if unmatched_samples:
+            print("  sample unmatched sections:")
+            for s in unmatched_samples:
+                print(f"    {s}")
 
     if max_agree + max_disagree:
         pct = round(100 * max_agree / (max_agree + max_disagree))

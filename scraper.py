@@ -209,6 +209,7 @@ def parse_section(raw):
         "part_of_term": raw.get("partOfTermDesc"),
         "seats_available": seats_available,
         "seats_estimated": seats_is_estimated,
+        "seats_source": "banner_search_api",
         "max_enrollment": max_enrollment,
         "enrollment": enrollment,
         "waitlist_available": raw.get("waitAvailable"),

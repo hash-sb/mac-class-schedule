@@ -286,13 +286,16 @@ function seatCellHTML(c) {
 
   const availLabel = avail === null || avail === undefined ? "?" : Math.max(avail, 0);
   const estimatedTag = c.seats_estimated ? ' <span class="seat-estimated" title="Computed from enrollment and capacity because Banner didn\u2019t report an open-seat count directly for this section.">est.</span>' : "";
+  const unverifiedTag = c.seats_source !== "class_schedule_rendered"
+    ? ' <span class="seat-unverified" title="Not yet cross-checked against macadmsys.macalester.edu\u2019s live Class Schedule page -- this section wasn\u2019t matched on the last refresh pass.">unverified</span>'
+    : "";
   const tooltip = overCapacity
     ? `${filled}/${max} enrolled (over capacity)`
     : `${filled}/${max} enrolled`;
 
   return `
     <div class="seat-cell" title="${escapeHTML(tooltip)}">
-      <span class="seat-text">${availLabel} open of ${max}${estimatedTag}</span>
+      <span class="seat-text">${availLabel} open of ${max}${estimatedTag}${unverifiedTag}</span>
       <div class="seat-bar-track"><div class="seat-bar-fill ${barClass}" style="width:${pct}%"></div></div>
     </div>`;
 }

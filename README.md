@@ -228,6 +228,36 @@ control if it finds one on the page before capturing numbers, logging
 whether it found one (`clicked 'Update Open Seats'...` vs `no control
 found`) -- worth checking that line too.
 
+**If it's only *some* sections that are wrong** (not a systemic
+column-swap kind of wrong), the log now also reports:
+
+- **Coverage gaps** -- sections whose CRN simply wasn't found on the
+  rendered page at all, so they still carry whatever the (less reliable)
+  bulk API had:
+  ```
+  3/765 sections were NOT found on the rendered page -- they keep whatever
+  scraper.py's bulk API already had (not corrected this pass).
+    sample unmatched sections:
+      STAT 155-01 (CRN 10003)
+  ```
+  In the app itself, any section still on unconfirmed data shows a small
+  **"unverified"** tag next to its seat count (hover for why) -- so you
+  can see exactly which sections to distrust rather than guessing.
+- **Same-CRN conflicts** -- if a section spans multiple rows (e.g.
+  multiple meeting patterns) and they disagree on seat numbers, the first
+  row is kept and the conflict is logged rather than silently letting
+  whichever row came later win:
+  ```
+  WARNING: 1 CRN(s) had multiple rows with different seat numbers -- kept
+  the first row seen for each:
+    CRN 10018: kept {...} over conflicting {...}
+  ```
+
+Extraction also now reads seats/max from each row's **last two cells**
+rather than fixed positions 4/5 -- some section types render extra or
+fewer descriptive columns before them, and pinning to the end is more
+robust to that than assuming a fixed column count.
+
 ## Making runs faster
 
 A "full" run (inside a registration window, or the daily baseline) has two

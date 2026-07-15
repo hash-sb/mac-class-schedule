@@ -433,6 +433,14 @@ main{
   border-bottom:1px dotted var(--ink-soft);
 }
 
+.seat-unverified{
+  color:var(--brass);
+  font-style:italic;
+  font-size:0.68rem;
+  cursor:help;
+  border-bottom:1px dotted var(--brass);
+}
+
 .seat-bar-track{
   height:5px;
   width:100%;
